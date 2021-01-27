@@ -4,7 +4,7 @@ import { SafeAreaView, Image, StyleSheet, Text } from "react-native";
 const Splash = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <Text>Splash</Text>
+            <Text style={styles.text}>neshM</Text>
         </SafeAreaView>
     );
 }
@@ -12,12 +12,14 @@ const Splash = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#fff',
+      backgroundColor: '#549287',
       alignItems: 'center',
       justifyContent: 'center',
-      borderColor: 'black',
-      borderWidth: 5
     },
+    text: {
+      color: 'white',
+      fontSize: 64
+    }
   });
 
 export { Splash };
