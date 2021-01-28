@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, Image, TextInput, StyleSheet, View, Dimensions } from "react-native";
-import { SignInButton } from "../components/SignInButton";
-import { SignUpButton } from "../components/SignUpButton";
+import { SignInButton } from "../../components/SignInButton";
+import { SignUpButton } from "../../components/SignUpButton";
 
 const Login = () => {
   return (
