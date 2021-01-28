@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Login } from './Login';
-import { Dashboard } from '../Dashboard/Dashboard';
+import { BottomTabNavigator } from '../Dashboard/BottomTabNavigator';
 import { SignUp } from './SignUp';
 import { Register } from './Register';
 
@@ -24,8 +24,8 @@ const EntryNavigator = () => {
                 component={Register}
             />
             <Stack.Screen
-                name="Dashboard"
-                component={Dashboard}
+                name="BottomTabNavigator"
+                component={BottomTabNavigator}
             />
         </Stack.Navigator>
     );

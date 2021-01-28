@@ -1,9 +1,12 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, ToastAndroid } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 const SignInButton = () => {
+    const navigation = useNavigation();
+
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate('BottomTabNavigator')}}>
             <Text>Sign In</Text>
         </TouchableOpacity>
     );

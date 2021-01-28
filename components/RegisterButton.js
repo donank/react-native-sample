@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, ToastAndroid } from "react-native";
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterButton = () => {
     const navigation = useNavigation();

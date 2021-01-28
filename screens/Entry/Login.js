@@ -9,7 +9,7 @@ const Login = () => {
       <View style={styles.imageContainer}>
         <Image
           style={{ width: 270, height: 240 }}
-          source={require('../assets/login.png')}
+          source={require('../../assets/login.png')}
         />
       </View>
       <View style={styles.loginFormContainer}>

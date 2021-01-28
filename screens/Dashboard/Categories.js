@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, Image, StyleSheet, Text } from "react-native";
 
-const Dashboard = () => {
+const Categories = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <Text>Dashboard</Text>
+            <Text>Categories</Text>
         </SafeAreaView>
     );
 }
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export { Dashboard };
+export { Categories };
