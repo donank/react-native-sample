@@ -1,12 +1,17 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, ToastAndroid } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { registerWithEmail } from './firebase';
 
-const RegisterButton = () => {
+const RegisterButton = ({email, password}) => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate('Register')}}>
+        <TouchableOpacity style={styles.container} onPress={() => {
+            registerWithEmail(email,password).then(() => {
+                navigation.navigate('Register')
+            });
+            }}>
             <Text style={styles.text}>Register</Text>
         </TouchableOpacity>
     );

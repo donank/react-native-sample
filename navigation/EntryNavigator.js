@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Login } from './Login';
-import { BottomTabNavigator } from '../Dashboard/BottomTabNavigator';
-import { SignUp } from './SignUp';
-import { Register } from './Register';
+import { Login } from '../screens/Entry/Login';
+import { BottomTabNavigator } from './BottomTabNavigator';
+import { SignUp } from '../screens/Entry/SignUp';
+import { Register } from '../screens/Entry/Register';
 
 
 const Stack = createStackNavigator();

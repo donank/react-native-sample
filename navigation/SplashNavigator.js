@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { EntryNavigator } from '../Entry/EntryNavigator';
-import { Splash } from './Splash';
+import { EntryNavigator } from './EntryNavigator';
+import { Splash } from '../screens/Splash/Splash';
 
 const Stack = createStackNavigator();
 const SplashNavigator = () => {

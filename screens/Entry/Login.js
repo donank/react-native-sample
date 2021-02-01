@@ -4,6 +4,9 @@ import { SignInButton } from "../../components/SignInButton";
 import { SignUpButton } from "../../components/SignUpButton";
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -13,12 +16,12 @@ const Login = () => {
         />
       </View>
       <View style={styles.loginFormContainer}>
-        <TextInput style={styles.textInput} placeholder="Email" placeholderTextColor='black' />
-        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} placeholderTextColor='black' />
+        <TextInput style={styles.textInput} placeholder="Email" placeholderTextColor='black' onChangeText={(email)=>{setEmail(email)}} />
+        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} placeholderTextColor='black' onChangeText={(password)=>{setPassword(password)}}/>
         
       </View>
       <View style={styles.buttonContainer}>
-          <SignInButton />
+          <SignInButton email={email} password={password}/>
           <SignUpButton />
         </View>
     </SafeAreaView>

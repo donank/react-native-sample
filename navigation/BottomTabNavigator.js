@@ -1,10 +1,10 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Categories } from './Categories';
-import { Dashboard } from './Dashboard';
-import { Profile } from './Profile';
-import { Search } from './Search';
+import { Categories } from '../screens/Dashboard/Categories';
+import { Dashboard } from '../screens/Dashboard/Dashboard';
+import { Profile } from '../screens/Dashboard/Profile';
+import { Search } from '../screens/Dashboard/Search';
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();

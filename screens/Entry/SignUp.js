@@ -3,17 +3,24 @@ import { SafeAreaView, Image, TextInput, StyleSheet, View, Dimensions } from "re
 import { RegisterButton } from "../../components/RegisterButton";
 
 const SignUp = ({navigation}) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    useEffect(()=> {
+        //console.log("Email: " + email + "| Password: " + password);   
+    })
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.loginFormContainer}>
                 <TextInput style={styles.textInput} placeholder="Username" placeholderTextColor='black' />
                 <TextInput style={styles.textInput} placeholder="Phone Number" placeholderTextColor='black' keyboardType='numeric' maxLength={10} />
-                <TextInput style={styles.textInput} placeholder="Email" placeholderTextColor='black' />
-                <TextInput style={styles.textInput} placeholder="Password" placeholderTextColor='black' secureTextEntry={true}/>
+                <TextInput style={styles.textInput} placeholder="Email" placeholderTextColor='black' onChangeText={email => setEmail(email)}/>
+                <TextInput style={styles.textInput} placeholder="Password" placeholderTextColor='black' secureTextEntry={true} onChangeText={password => setPassword(password)}/>
                 <TextInput style={styles.textInput} placeholder="Confirm Password" placeholderTextColor='black' secureTextEntry={true}/>
             </View>
             <View style={styles.buttonContainer}>
-                <RegisterButton/>
+                <RegisterButton email={email} password={password}/>
             </View>
         </SafeAreaView>
     );

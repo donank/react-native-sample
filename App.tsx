@@ -1,7 +1,5 @@
 import React from 'react';
-import { Login } from './screens/Entry/Login';
-import { SignUp } from './screens/Entry/SignUp';
-import { SplashNavigator } from './screens/Splash/SplashNavigator';
+import { SplashNavigator } from './navigation/SplashNavigator';
 
 export default function App() {
   return <SplashNavigator/>;
