@@ -7,7 +7,7 @@ const RegisterButton = ({email, password}) => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {
+        <TouchableOpacity style={styles.touchableContainer} onPress={() => {
             registerWithEmail(email,password).then(() => {
                 navigation.navigate('Register')
             });
@@ -18,7 +18,7 @@ const RegisterButton = ({email, password}) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    touchableContainer: {
         backgroundColor: '#E6E6E6',
         width: 144,
         height: 46,

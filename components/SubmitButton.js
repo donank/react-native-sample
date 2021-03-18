@@ -6,14 +6,14 @@ const SubmitButton = () => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate('BottomTabNavigator')}}>
+        <TouchableOpacity style={styles.touchableContainer} onPress={() => {navigation.navigate('BottomTabNavigator')}}>
             <Text style={styles.text}>Submit</Text>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    touchableContainer: {
         backgroundColor: '#E6E6E6',
         width: 144,
         height: 46,
