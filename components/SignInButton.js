@@ -9,7 +9,7 @@ const SignInButton = ({ email, password }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={() => {
             handleOnLogin({email, password}).then((result) => {
-                result ? navigation.navigate('BottomTabNavigator') : ToastAndroid.show('Login Failed', ToastAndroid.SHORT)
+                result ? navigation.navigate('DashboardNavigator') : ToastAndroid.show('Login Failed', ToastAndroid.SHORT)
             })
         }}>
             <Text>Sign In</Text>

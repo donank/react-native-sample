@@ -1,11 +1,11 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Categories } from '../screens/Dashboard/Categories';
-import { Dashboard } from '../screens/Dashboard/Dashboard';
-import { Profile } from '../screens/Dashboard/Profile';
-import { Search } from '../screens/Dashboard/Search';
 import { Ionicons } from "@expo/vector-icons";
+import { HomeNavigator } from "./TrendingNavigator/HomeNavigator";
+import { SearchNavigator } from "./TrendingNavigator/SearchNavigator";
+import { CategoriesNavigator } from "./TrendingNavigator/CategoriesNavigator";
+import { ProfileNavigator } from "./TrendingNavigator/ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,10 +37,10 @@ const BottomTabNavigator = () => {
       style={{
           backgroundColor: 'green'
       }}>
-        <Tab.Screen name="Home" component={Dashboard}/>
-        <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Categories" component={Categories} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Home" component={HomeNavigator}/>
+        <Tab.Screen name="Search" component={SearchNavigator} />
+        <Tab.Screen name="Categories" component={CategoriesNavigator} />
+        <Tab.Screen name="Profile" component={ProfileNavigator} />
       </Tab.Navigator>
     );
   }

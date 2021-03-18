@@ -4,6 +4,7 @@ import { Login } from '../screens/Entry/Login';
 import { BottomTabNavigator } from './BottomTabNavigator';
 import { SignUp } from '../screens/Entry/SignUp';
 import { Register } from '../screens/Entry/Register';
+import { DashboardNavigator } from './DashboardNavigator';
 
 
 const Stack = createStackNavigator();
@@ -24,8 +25,8 @@ const EntryNavigator = () => {
                 component={Register}
             />
             <Stack.Screen
-                name="BottomTabNavigator"
-                component={BottomTabNavigator}
+                name="DashboardNavigator"
+                component={DashboardNavigator}
             />
         </Stack.Navigator>
     );

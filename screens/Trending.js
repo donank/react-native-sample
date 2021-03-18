@@ -1,12 +1,11 @@
 import React from "react";
 import { SafeAreaView, Image, StyleSheet, Text, View, ScrollView } from "react-native";
-import { Toolbar } from "../../components/Toolbar";
 
-const Dashboard = ({navigation}) => {
+const Trending = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Toolbar/>
+        <Text>Trending</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -19,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { Dashboard };
+export { Trending };
