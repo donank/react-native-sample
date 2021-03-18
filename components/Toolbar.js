@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 const Toolbar = () => {
     const navigation = useNavigation();
     return (
-        <View style={{ flex: 1, flexDirection: 'row', marginTop: 50, backgroundColor: '#549287', padding: 6, justifyContent: 'space-between' }}>
+        <View>
+            <View style={{ flex: 1, flexDirection: 'row', marginTop: 50, backgroundColor: '#549287', padding: 6, justifyContent: 'space-between' }}>
             <Ionicons
                 name="md-menu"
                 size={40}
@@ -21,6 +22,7 @@ const Toolbar = () => {
                 color="black"
                 onPress={() => navigation.navigate('Trending')}
             />
+        </View>
         </View>
     );
 }
