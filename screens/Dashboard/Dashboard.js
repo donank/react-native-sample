@@ -15,7 +15,7 @@ const Dashboard = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(184, 210, 208, 0.44)'
   },
 });
 

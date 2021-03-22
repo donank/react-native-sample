@@ -5,23 +5,6 @@ import { searchSkill } from '../../components/firebase';
 import { SearchResultCard } from "../../components/SearchResultCard";
 import { SearchResultBGCard } from "../../components/SearchResultBGCard";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-];
-
-
-
 const Search = () => {
   const [search, setSearch] = useState('')
 
@@ -51,7 +34,7 @@ const Search = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(184, 210, 208, 0.44)'
   },
   contentwrapper: {
     flex: 1,

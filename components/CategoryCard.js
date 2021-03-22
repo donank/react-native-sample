@@ -1,20 +1,31 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, Image, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
+import {
+    useFonts,
+    Roboto_400Regular,
+} from '@expo-google-fonts/roboto';
 
 const CategoryCard = () => {
     const navigation = useNavigation();
-
-    return (
-        <TouchableOpacity style={styles.container} onPress={() => { }}>
-            <Image style={styles.hero} source={require('../assets/programming.jpg')} />
-            <View style={styles.heroTint} />
-            <View style={styles.detailWrapper}>
-                <Text style={styles.title}>Learn Python Fundamentals</Text>
-                <Text style={styles.creator}>Guido Van Rossum</Text>
-            </View>
-        </TouchableOpacity>
-    );
+    let [fontsLoaded] = useFonts({
+        Roboto_400Regular,
+    })
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    } else {
+        return (
+            <TouchableOpacity style={styles.container} onPress={() => { navigation.navigate('Course') }}>
+                <Image style={styles.hero} source={require('../assets/programming.jpg')} />
+                <View style={styles.heroTint} />
+                <View style={styles.detailWrapper}>
+                    <Text style={styles.title}>Learn Python Fundamentals</Text>
+                    <Text style={styles.creator}>Guido Van Rossum</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -22,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F6F3F3',
         width: '100%',
         height: 100,
-        marginVertical: 10
+        marginBottom: 4
     },
     detailWrapper: {
         flex: 1,
@@ -33,7 +44,7 @@ const styles = StyleSheet.create({
         color: 'white',
         ...Platform.select({
             ios: { fontFamily: 'Arial', },
-            android: { fontFamily: 'Roboto' }
+            android: { fontFamily: 'Roboto_400Regular' }
         }),
         fontWeight: '400',
         fontSize: 18
@@ -42,7 +53,7 @@ const styles = StyleSheet.create({
         color: 'white',
         ...Platform.select({
             ios: { fontFamily: 'Arial', },
-            android: { fontFamily: 'Roboto' }
+            android: { fontFamily: 'Roboto_400Regular' }
         }),
         marginTop: 2,
         fontWeight: "400",
