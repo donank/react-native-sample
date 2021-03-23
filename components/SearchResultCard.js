@@ -44,9 +44,20 @@ const styles = StyleSheet.create({
             ios: { fontFamily: 'Arial', },
             android: { fontFamily: 'Roboto' }
         }),
-        marginTop: 2,
         fontWeight: "400",
-        fontSize: 16
+        fontSize: 16,
+    },
+    cityWrapper: {
+
+    },
+    city: {
+        color: 'white',
+        ...Platform.select({
+            ios: { fontFamily: 'Arial', },
+            android: { fontFamily: 'Roboto' }
+        }),
+        fontWeight: "400",
+        fontSize: 14,
     },
     heroTint: {
         backgroundColor: 'rgba(52, 52, 52, 0.8)',
@@ -66,3 +77,16 @@ const styles = StyleSheet.create({
 });
 
 export { SearchResultCard }
+
+/*
+<View style={styles.cityWrapper}>
+                    <Text>
+                        <View style={{}}>
+                            <Text style={styles.city}>
+                                Bengaluru
+                        </Text>
+                        </View>
+                    </Text>
+                </View>
+
+                */

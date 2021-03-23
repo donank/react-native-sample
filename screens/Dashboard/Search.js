@@ -4,9 +4,12 @@ import { Toolbar } from "../../components/Toolbar";
 import { searchSkill } from '../../components/firebase';
 import { SearchResultCard } from "../../components/SearchResultCard";
 import { SearchResultBGCard } from "../../components/SearchResultBGCard";
+import * as Locations from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 const Search = () => {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+  const [location, setLocation] = useState(null);
 
   return (
     <SafeAreaView style={styles.container}>
