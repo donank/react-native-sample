@@ -10,7 +10,7 @@ import { EnrollButton } from "../components/EnrollButton";
 import { CommonActions } from '@react-navigation/native';
 
 const Course = ({ navigation, route }) => {
-    const { name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time } = route.params
+    const { name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email } = route.params
     const [search, setSearch] = useState('')
     const [bookmark, setBookmark] = useState(false)
     let [fontsLoaded] = useFonts({
@@ -39,7 +39,7 @@ const Course = ({ navigation, route }) => {
                     <View style={styles.heroTint} />
                     <Pressable onPress={() => {
                         navigation.dispatch(CommonActions.navigate({name: 'CourseAdmin', params: { 
-                            name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time
+                            name: name, pfpurl: pfpurl, location: location, email: email
                         }} ))
                     }}>
                         <Image style={styles.creatorPfp} source={{ uri: pfpurl }} />

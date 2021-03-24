@@ -7,7 +7,7 @@ import {
     Roboto_400Regular,
 } from '@expo-google-fonts/roboto';
 
-const CategoryCard = ({name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time}) => {
+const CategoryCard = ({name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email}) => {
     const navigation = useNavigation();
     let [fontsLoaded] = useFonts({
         Roboto_400Regular,
@@ -18,7 +18,7 @@ const CategoryCard = ({name, title, description, enrolled, stars, type, imageurl
         return (
             <TouchableOpacity style={styles.container} onPress={() => { 
                 navigation.dispatch(CommonActions.navigate({name: 'Course', params: { 
-                    name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time
+                    name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time, email: email
                 }} ))
              }}>
                 <Image style={styles.hero} source={require('../assets/programming.jpg')} />

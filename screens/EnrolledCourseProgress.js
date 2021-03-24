@@ -229,7 +229,9 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     noTodoImage: {
-        marginTop: '40%',
+        marginTop: 60,
+        width: '50%',
+        height: '50%',
         justifyContent: 'center',
         alignSelf: 'center'
     }
