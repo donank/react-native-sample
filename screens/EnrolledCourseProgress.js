@@ -13,7 +13,9 @@ import { Ionicons } from "@expo/vector-icons";
 
 const Item = ({ title }) => (
     <View style={styles.item}>
-        <Ionicons name='arrow-forward' size={24} color='black' />
+        <View style={{justifyContent:'center', alignItems: 'center'}}>
+        <Ionicons name='ellipse' size={16} color='#C4C4C4'/>
+        </View>
         <Text style={styles.listTitle}>{title}</Text>
     </View>
 );
@@ -46,7 +48,7 @@ const EnrolledCourseProgress = ({ navigation }) => {
                             <Text style={styles.todoHeading}>To Do</Text>
                         </View>
                         <View style={styles.todoListContainer}>
-                            <Ionicons style={styles.addIcon} name='add-circle-outline' size={36} color='white' onPress={() => {
+                            <Ionicons style={styles.addIcon} name='add-circle-outline' size={36} color='black' onPress={() => {
                                 setModalVisible(true)
                             }} />
                             {data == "" ? (
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     },
     heroContainer: {
         width: '100%',
-        height: Dimensions.get('screen').height / 9
+        height: Dimensions.get('screen').height / 8
     },
     hero: {
         width: '100%',
@@ -118,16 +120,19 @@ const styles = StyleSheet.create({
     courseTitle: {
         color: 'white',
         position: 'absolute',
-        bottom: 10,
+        bottom: 30,
         fontFamily: 'Roboto_400Regular',
         fontSize: 20,
-        marginLeft: 10
+        marginLeft: 10,
+        backgroundColor: '#549287',
+        paddingHorizontal: 6,
+        paddingVertical: 2
     },
     todoContainer: {
         flexDirection: 'column',
         backgroundColor: '#E28585',
         minHeight: Dimensions.get('screen').height / 1.5,
-        marginTop: 60
+        marginTop: 1
     },
     todoHeadingContainer: {
         backgroundColor: '#C4C4C4',
@@ -153,6 +158,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontFamily: 'Roboto_400Regular',
         fontSize: 18,
+        marginLeft: 10
     },
     item: {
         flexDirection: 'row',
@@ -215,7 +221,6 @@ const styles = StyleSheet.create({
     modalTextInput: {
         backgroundColor: '#E5E5E5',
         width: '100%',
-        height: 160,
         color: 'black',
         padding: 10,
         borderBottomWidth: 1,
