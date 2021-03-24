@@ -26,8 +26,21 @@ const Categories = () => {
               </View>
               <View style={styles.categoryItemsWrapper}>
                 <ScrollView>
-                  <CategoryCard />
-                  <CategoryCard />
+                <CategoryCard name="Guido van Rossum" title="Learn Python Fundamentals"
+          description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
+          enrolled={245} stars={3} type="Professional"
+          imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
+          pfpurl='https://cms.qz.com/wp-content/uploads/2019/05/Guido-van-Rossum-e1558635088256.jpg?quality=75&strip=all&w=1600&h=900&crop=1' 
+          location='Amsterdam, Netherlands'
+          time='5:00 pm - 7:00 pm CET'/>
+          
+                  <CategoryCard name="Guido van Rossum" title="Learn Python Fundamentals"
+          description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
+          enrolled={245} stars={3} type="Professional"
+          imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
+          pfpurl='https://cms.qz.com/wp-content/uploads/2019/05/Guido-van-Rossum-e1558635088256.jpg?quality=75&strip=all&w=1600&h=900&crop=1' 
+          location='Amsterdam, Netherlands'
+          time='5:00 pm - 7:00 pm CET'/>
                 </ScrollView>
               </View>
             </View>
@@ -39,8 +52,21 @@ const Categories = () => {
               </View>
               <View style={styles.categoryItemsWrapper}>
                 <ScrollView>
-                  <CategoryCard />
-                  <CategoryCard />
+                <CategoryCard name="Guido van Rossum" title="Learn Python Fundamentals"
+          description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
+          enrolled={245} stars={3} type="Professional"
+          imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
+          pfpurl='https://cms.qz.com/wp-content/uploads/2019/05/Guido-van-Rossum-e1558635088256.jpg?quality=75&strip=all&w=1600&h=900&crop=1' 
+          location='Amsterdam, Netherlands'
+          time='5:00 pm - 7:00 pm CET'/>
+          
+                  <CategoryCard name="Guido van Rossum" title="Learn Python Fundamentals"
+          description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
+          enrolled={245} stars={3} type="Professional"
+          imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
+          pfpurl='https://cms.qz.com/wp-content/uploads/2019/05/Guido-van-Rossum-e1558635088256.jpg?quality=75&strip=all&w=1600&h=900&crop=1' 
+          location='Amsterdam, Netherlands'
+          time='5:00 pm - 7:00 pm CET'/>
                 </ScrollView>
               </View>
             </View>
@@ -52,8 +78,21 @@ const Categories = () => {
               </View>
               <View style={styles.categoryItemsWrapper}>
                 <ScrollView>
-                  <CategoryCard />
-                  <CategoryCard />
+                  <CategoryCard name="Guido van Rossum" title="Learn Python Fundamentals"
+          description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
+          enrolled={245} stars={3} type="Professional"
+          imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
+          pfpurl='https://cms.qz.com/wp-content/uploads/2019/05/Guido-van-Rossum-e1558635088256.jpg?quality=75&strip=all&w=1600&h=900&crop=1' 
+          location='Amsterdam, Netherlands'
+          time='5:00 pm - 7:00 pm CET'/>
+
+                  <CategoryCard name="Guido van Rossum" title="Learn Python Fundamentals"
+          description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
+          enrolled={245} stars={3} type="Professional"
+          imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
+          pfpurl='https://cms.qz.com/wp-content/uploads/2019/05/Guido-van-Rossum-e1558635088256.jpg?quality=75&strip=all&w=1600&h=900&crop=1' 
+          location='Amsterdam, Netherlands'
+          time='5:00 pm - 7:00 pm CET'/>
                 </ScrollView>
               </View>
             </View>

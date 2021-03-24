@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, Image, View } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import {
     useFonts,
     Roboto_400Regular,
 } from '@expo-google-fonts/roboto';
 
-const CategoryCard = () => {
+const CategoryCard = ({name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time}) => {
     const navigation = useNavigation();
     let [fontsLoaded] = useFonts({
         Roboto_400Regular,
@@ -16,12 +16,16 @@ const CategoryCard = () => {
         return <AppLoading />;
     } else {
         return (
-            <TouchableOpacity style={styles.container} onPress={() => { navigation.navigate('Course') }}>
+            <TouchableOpacity style={styles.container} onPress={() => { 
+                navigation.dispatch(CommonActions.navigate({name: 'Course', params: { 
+                    name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time
+                }} ))
+             }}>
                 <Image style={styles.hero} source={require('../assets/programming.jpg')} />
                 <View style={styles.heroTint} />
                 <View style={styles.detailWrapper}>
-                    <Text style={styles.title}>Learn Python Fundamentals</Text>
-                    <Text style={styles.creator}>Guido Van Rossum</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.creator}>{name}</Text>
                 </View>
             </TouchableOpacity>
         );

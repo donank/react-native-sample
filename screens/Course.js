@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Button } from "react-native";
+import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Pressable } from "react-native";
 import AppLoading from 'expo-app-loading';
 import {
     useFonts,
@@ -7,8 +7,10 @@ import {
 } from '@expo-google-fonts/roboto';
 import { Ionicons } from "@expo/vector-icons";
 import { EnrollButton } from "../components/EnrollButton";
+import { CommonActions } from '@react-navigation/native';
 
-const Course = () => {
+const Course = ({ navigation, route }) => {
+    const { name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time } = route.params
     const [search, setSearch] = useState('')
     const [bookmark, setBookmark] = useState(false)
     let [fontsLoaded] = useFonts({
@@ -20,38 +22,44 @@ const Course = () => {
         return (
             <SafeAreaView style={styles.container}>
                 {bookmark == true ? (
-                        <TouchableOpacity style={{ position: 'absolute', top: 60, elevation: 2, right: 20  }} onPress={() => {
-                            console.log("Bookmarkt Clicked")
-                        }}>
-                            <Ionicons style={{}} name='bookmark' size={32} color='white' onPress={() => console.log("Icon Clicked")} />
-                        </TouchableOpacity>
-                    ) : (
-                        <TouchableOpacity style={{ position: 'absolute', top: 60, right: 20, elevation: 2 }} onPress={() => {
-                            console.log("Bookmarkt Clicked")
-                        }}>
-                            <Ionicons style={{}} name='bookmark-outline' size={32} color='white' onPress={() => console.log("Icon Clicked")}/>
-                        </TouchableOpacity>
-                    )}
+                    <Pressable style={{ position: 'absolute', top: 60, elevation: 2, right: 20 }} onPress={() => {
+                        console.log("Bookmarkt Clicked")
+                    }}>
+                        <Ionicons style={{}} name='bookmark' size={32} color='white' />
+                    </Pressable>
+                ) : (
+                    <Pressable style={{ position: 'absolute', top: 60, right: 20, elevation: 2 }} onPress={() => {
+                        console.log("Bookmarkt Clicked")
+                    }}>
+                        <Ionicons style={{}} name='bookmark-outline' size={32} color='white' />
+                    </Pressable>
+                )}
                 <View style={styles.imageConainer}>
-                    <Image style={styles.hero} source={require('../assets/programming.jpg')} />
+                    <Image style={styles.hero} source={{ uri: imageurl }} />
                     <View style={styles.heroTint} />
-                    <Image style={styles.creatorPfp} source={require('../assets/pfp.png')} />
+                    <Pressable onPress={() => {
+                        navigation.dispatch(CommonActions.navigate({name: 'CourseAdmin', params: { 
+                            name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time
+                        }} ))
+                    }}>
+                        <Image style={styles.creatorPfp} source={{ uri: pfpurl }} />
+                    </Pressable>
                     <Text style={styles.title}>
-                        Learn Python Fundamentals
+                        {title}
                     </Text>
                     <Text style={styles.description}>
-                        Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development.
+                        {description}
                     </Text>
                 </View>
                 <View style={styles.courseDetailsContainer}>
                     <Text style={styles.locationHeading}>Location</Text>
                     <View style={styles.detailItemContainer}>
                         <Ionicons style={{}} name='location' size={24} color='black' />
-                        <Text style={styles.detailItemText}>Bengaluru, India</Text>
+                        <Text style={styles.detailItemText}>{location}</Text>
                     </View>
                     <View style={styles.detailItemContainer}>
                         <Ionicons style={{}} name='time' size={24} color='black' />
-                        <Text style={styles.detailItemText}>12:00 pm - 4:00 pm</Text>
+                        <Text style={styles.detailItemText}>{time}</Text>
                     </View>
                     <EnrollButton />
 
@@ -136,7 +144,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#549287',
         borderRadius: 42,
-        margin: 10
+        margin: 10,
     }
 });
 

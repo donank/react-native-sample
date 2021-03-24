@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, Image, View, Dimensions } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import {
     useFonts,
@@ -8,7 +8,7 @@ import {
 } from '@expo-google-fonts/roboto';
 import { Ionicons } from "@expo/vector-icons";
 
-const TrendingCourse = ({ name, title, description, enrolled, stars, type, imageurl, pfpurl }) => {
+const TrendingCourse = ({ name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time }) => {
     const navigation = useNavigation();
     const [tagColor, setTagColor] = useState('')
 
@@ -43,7 +43,11 @@ const TrendingCourse = ({ name, title, description, enrolled, stars, type, image
         return <AppLoading />;
     } else {
         return (
-            <TouchableOpacity style={styles.container} onPress={() => { navigation.navigate('Course') }}>
+            <TouchableOpacity style={styles.container} onPress={() => { 
+                navigation.dispatch(CommonActions.navigate({name: 'Course', params: { 
+                    name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time
+                }} ))
+                }}>
                 <View style={{ flex: 0.13, backgroundColor: '#fff' }}>
 
                 </View>
