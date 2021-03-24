@@ -6,6 +6,7 @@ import {
     useFonts,
     Roboto_400Regular,
 } from '@expo-google-fonts/roboto';
+import { Ionicons } from "@expo/vector-icons";
 
 const OngoingCourses = () => {
     const navigation = useNavigation();
@@ -16,7 +17,7 @@ const OngoingCourses = () => {
         return <AppLoading />;
     } else {
         return (
-            <TouchableOpacity style={styles.container} onPress={() => { navigation.navigate('Course') }}>
+            <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate('EnrolledCourseProgress')}}>
                 <Image style={styles.hero} source={require('../assets/programming.jpg')} />
                 <View style={styles.heroTint} />
                 <View style={styles.detailWrapper}>
@@ -26,7 +27,8 @@ const OngoingCourses = () => {
                     <Text style={styles.title}>Learn Python Fundamentals</Text>
                 </View>
                 <View style={styles.timeContainer}>
-
+                    <Ionicons name='time-outline' size={20} color='white' />  
+                    <Text style={styles.timeText}>10 am - 11 am</Text> 
                 </View>
             </TouchableOpacity>
         );
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').height / 5,
         marginHorizontal: 10,
         borderBottomLeftRadius: 6,
-        borderTopRightRadius: 6
+        borderTopRightRadius: 6,
     },
     hero: {
         height: Dimensions.get('screen').height / 4,
@@ -81,7 +83,13 @@ const styles = StyleSheet.create({
         margin: 10
     },
     timeContainer: {
-
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 10,
+        left: 10
+    },
+    timeText: {
+        color: 'white'
     }
 })
 

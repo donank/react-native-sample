@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image } from "react-native";
+import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Button } from "react-native";
 import AppLoading from 'expo-app-loading';
 import {
     useFonts,
@@ -19,14 +19,21 @@ const Course = () => {
     } else {
         return (
             <SafeAreaView style={styles.container}>
+                {bookmark == true ? (
+                        <TouchableOpacity style={{ position: 'absolute', top: 60, elevation: 2, right: 20  }} onPress={() => {
+                            console.log("Bookmarkt Clicked")
+                        }}>
+                            <Ionicons style={{}} name='bookmark' size={32} color='white' onPress={() => console.log("Icon Clicked")} />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity style={{ position: 'absolute', top: 60, right: 20, elevation: 2 }} onPress={() => {
+                            console.log("Bookmarkt Clicked")
+                        }}>
+                            <Ionicons style={{}} name='bookmark-outline' size={32} color='white' onPress={() => console.log("Icon Clicked")}/>
+                        </TouchableOpacity>
+                    )}
                 <View style={styles.imageConainer}>
                     <Image style={styles.hero} source={require('../assets/programming.jpg')} />
-                    {bookmark == true ? (
-                        <Ionicons style={{ position: 'relative', left: 330, top: -110, elevation: 1 }} name='bookmark' size={32} color='white' />
-                    ) : (
-
-                        <Ionicons style={{ position: 'relative', left: 330, top: -110, elevation: 1 }} name='bookmark-outline' size={32} color='white' />
-                    )}
                     <View style={styles.heroTint} />
                     <Image style={styles.creatorPfp} source={require('../assets/pfp.png')} />
                     <Text style={styles.title}>
@@ -47,6 +54,7 @@ const Course = () => {
                         <Text style={styles.detailItemText}>12:00 pm - 4:00 pm</Text>
                     </View>
                     <EnrollButton />
+
                 </View>
             </SafeAreaView>
         );
@@ -56,7 +64,7 @@ const Course = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgba(184, 210, 208, 0.44)'
+        backgroundColor: 'rgba(184, 210, 208, 0.44)',
     },
     imageConainer: {
         flex: 0.6,
