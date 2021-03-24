@@ -35,16 +35,21 @@ const Profile = () => {
               <Text style={styles.detailsItemValue}>100</Text>
             </View>
             <View style={styles.numericalDetailsItemContainer}>
-            <Text style={styles.detailsItemTitle}>Enrolled</Text>
+              <Text style={styles.detailsItemTitle}>Enrolled</Text>
               <Text style={styles.detailsItemValue}>4</Text>
             </View>
             <View style={styles.numericalDetailsItemContainer}>
-            <Text style={styles.detailsItemTitle}>Completed</Text>
+              <Text style={styles.detailsItemTitle}>Completed</Text>
               <Text style={styles.detailsItemValue}>2</Text>
             </View>
           </View>
-          <View>
+          <View style={styles.detailsContainer}>
+            <View style={styles.detailLabelContainer}>
 
+            </View>
+            <View style={styles.detailDataContainer}>
+
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -115,6 +120,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 6,
     marginBottom: 10
+  },
+  detailsContainer: {
+
+  },
+  detailDataContainer: {
+
+  },
+  detailLabelContainer: {
+
   }
 });
 
