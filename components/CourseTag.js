@@ -11,14 +11,19 @@ const CourseTag = ({ type, name }) => {
     const [colour, setColour] = useState("#393456")
     const navigation = useNavigation();
     useEffect(() => {
-        if (type == "Vocational") {
-            setColour("#549287")
-        } else if (type == "Professional") {
-            setColour("#E28585")
-        } else if (type == "Academic") {
-            setColour("#F0D07C")
-        } else if (type == "Hobby") {
-            setColour("#F0D07C")
+        switch(type){
+            case "Professional": {
+                setColour('#E28585')
+                break;
+            }
+            case "Vocational": {
+                setColour('#F0D07C')
+                break;
+            }
+            case "Academic": {
+                setColour('#71ABE5')
+                break;
+            }
         }
     })
     let [fontsLoaded] = useFonts({

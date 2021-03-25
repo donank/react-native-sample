@@ -22,7 +22,7 @@ const AdminCourseCard = ({name, title, description, enrolled, stars, type, image
                     name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time, email: email
                 }} ))
             }}>
-                <Image style={styles.hero} source={require('../assets/programming.jpg')} />
+                <Image style={styles.hero} source={{uri:imageurl}} />
                 <View style={styles.heroTint} />
                 <View style={styles.detailWrapper}>
                     <View style={styles.categoryTag}>
@@ -37,9 +37,8 @@ const AdminCourseCard = ({name, title, description, enrolled, stars, type, image
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        height: 200,
-        width: 160,
+        height: 220,
+        width: 170,
         marginHorizontal: 10,
         marginVertical: 10,
         borderBottomLeftRadius: 6,

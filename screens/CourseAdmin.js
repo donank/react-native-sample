@@ -7,11 +7,62 @@ import {
 } from '@expo-google-fonts/roboto';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AdminCourseCard } from "../components/AdminCourseCard";
+import { fetchTutor, fetchCourses } from "../components/firebase"
+import { Ionicons } from "@expo/vector-icons";
 
 const CourseAdmin = ({ navigation, route }) => {
 
-    const [follow, setfollow] = useState('Follow')
     const { name, location, email, pfpurl } = route.params
+
+    const [follow, setfollow] = useState('Follow')
+    const [tutor, setTutor] = useState({})
+    const [courses, setCourses] = useState([])
+    useEffect(() => {
+        fetchTutora()
+        console.log("Courses Log: \n", courses)
+    }, [])
+
+    const starList = []
+    var i;
+    for (i = 0; i < tutor.avg_rating; i++) {
+        starList.push(
+            <Ionicons name='star' size={16} color='black' />
+        )
+    }
+
+    const fetchTutora = async () => {
+        await fetchTutor(email).then((doc) => {
+            if (!doc.exists) {
+                console.log('No matching documents.');
+            }
+            setTutor(doc.data())
+            doc.data().courses.forEach(item => {
+                let arr = []
+                fetchCourses(item).then((course) => {
+                    if (!course.exists) {
+                        console.log('No matching documents.');
+                    }
+                    arr.push(course.data())
+                    setCourses(arr)
+                })
+            })
+        })
+    }
+
+    const courseList = courses.map((item, index) => {
+        return (
+            <AdminCourseCard key={index}
+                name={courses[index].creator_name} title={courses[index].name}
+                description={courses[index].description}
+                enrolled={courses[index].enrolled} stars={courses[index].rating} type={courses[index].type}
+                imageurl={courses[index].heroImageUrl}
+                pfpurl={courses[index].pfpurl}
+                location={courses[index].location}
+                time={courses[index].time}
+                email={courses[index].email} />
+        )
+    })
+
     let [fontsLoaded] = useFonts({
         Roboto_400Regular,
     })
@@ -37,37 +88,22 @@ const CourseAdmin = ({ navigation, route }) => {
                     <View style={styles.numericalDetailsContainer}>
                         <View style={styles.numericalDetailsItemContainer}>
                             <Text style={styles.detailsItemTitle}>Total Score</Text>
-                            <Text style={styles.detailsItemValue}>100</Text>
+                            <Text style={styles.detailsItemValue}>{tutor.total_students_taught}</Text>
                         </View>
                         <View style={styles.numericalDetailsItemContainer}>
-                            <Text style={styles.detailsItemTitle}>Enrolled</Text>
-                            <Text style={styles.detailsItemValue}>4</Text>
+                            <Text style={styles.detailsItemTitle}>Courses Taught</Text>
+                            <Text style={styles.detailsItemValue}>{tutor.total_courses_taught}</Text>
                         </View>
                         <View style={styles.numericalDetailsItemContainer}>
-                            <Text style={styles.detailsItemTitle}>Completed</Text>
-                            <Text style={styles.detailsItemValue}>2</Text>
+                            <Text style={styles.detailsItemTitle}>Ratings</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 6 }}>
+                                {starList}
+                            </View>
                         </View>
                     </View>
                     <View style={styles.courseListContainer}>
-                        <AdminCourseCard
-                            name={name} title="Learn Python Fundamentals"
-                            description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
-                            enrolled={245} stars={3} type="Professional"
-                            imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
-                            pfpurl={pfpurl}
-                            location={location}
-                            time='5:00 pm - 7:00 pm CET'
-                            email={email} />
-
-                        <AdminCourseCard
-                            name={name} title="Learn Python Fundamentals"
-                            description="Learn about the fundamentals of python from industry experts and pioneers who have established their name in the domain of python programming and software development."
-                            enrolled={245} stars={3} type="Professional"
-                            imageurl='https://www.impactplus.com/hs-fs/hubfs/Inbound%20Success%20Podcast/Blog%20Images/web-developer-characteristics.jpg?length=980&name=web-developer-characteristics.jpg'
-                            pfpurl={pfpurl}
-                            location={location}
-                            time='5:00 pm - 7:00 pm CET'
-                            email={email} />
+                        {courseList}
+                       
                     </View>
                 </ScrollView>
             </SafeAreaView>
