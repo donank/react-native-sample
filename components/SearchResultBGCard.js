@@ -1,18 +1,22 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, Image, View } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 
-const SearchResultBGCard = () => {
+const SearchResultBGCard = ({courseTitle, courseCreator, heroImageUrl, pfpurl, description, enrolled, stars, type, location, time, email}) => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => { }}>
-            <Image style={styles.hero} source={require('../assets/programming.jpg')} />
+        <TouchableOpacity style={styles.container} onPress={() => {
+            navigation.dispatch(CommonActions.navigate({name: 'Course', params: { 
+                name: courseCreator, title: courseTitle, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: heroImageUrl, pfpurl: pfpurl, location: location, time: time, email: email
+            }} ))
+         }}>
+            <Image style={styles.hero} source={{uri:heroImageUrl}} />
             <View style={styles.detailWrapper}>
-                <Text style={styles.title}>Learn Python Fundamentals</Text>
+                <Text style={styles.title}>{courseTitle}</Text>
                 <View style={{flex: 1, flexDirection: 'row', marginTop: 4}}>
-                    <Image style={styles.creatorPfp} source={require('../assets/pfp.png')} />
-                    <Text style={styles.creator}>Guido Van Rossum</Text>
+                    <Image style={styles.creatorPfp} source={{uri: pfpurl}} />
+                    <Text style={styles.creator}>{courseCreator}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -26,6 +30,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F6F3F3',
         width: '90%',
         height: 100,
+        marginBottom: 10
     },
     detailWrapper: {
         flex: 1,
@@ -59,7 +64,8 @@ const styles = StyleSheet.create({
     },
     creatorPfp: {
         height: 30,
-        width: 30
+        width: 30,
+        borderRadius: 30
     }
 });
 

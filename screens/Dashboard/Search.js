@@ -4,12 +4,19 @@ import { Toolbar } from "../../components/Toolbar";
 import { searchSkill } from '../../components/firebase';
 import { SearchResultCard } from "../../components/SearchResultCard";
 import { SearchResultBGCard } from "../../components/SearchResultBGCard";
-import * as Locations from 'expo-location';
-import * as Permissions from 'expo-permissions';
 
 const Search = () => {
   const [search, setSearch] = useState('');
-  const [location, setLocation] = useState(null);
+  const [data, setData] = useState([]);
+
+  const searchResultList = data.map((item, index) => {
+    return (
+      <SearchResultBGCard courseTitle={data[index].name} courseCreator={data[index].creator_name} heroImageUrl={data[index].heroImageUrl} 
+      pfpurl={data[index].pfpurl} description={data[index].description} enrolled={data[index].enrolled} stars={data[index].rating}
+      type={data[index].category_type} location={data[index].location} time={data[index].time} email={data[index].email}
+      />
+    );
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -17,17 +24,20 @@ const Search = () => {
         <Toolbar />
         <View style={styles.contentwrapper}>
           <TextInput style={styles.input} placeholder='Search' onChangeText={(search) => setSearch(search)} onSubmitEditing={async () => {
-            let snapshot = await searchSkill('skills', 'name', '==', search).get()
-            if (snapshot.empty) {
-              console.log('No matching documents.');
-            }
-            snapshot.forEach(doc => {
-              console.log(doc.data());
-            });
+            let snapshot = await searchSkill('skills', 'type', '==', search).get().then((snapshot)=>{
+              let arr = []
+              if (snapshot.empty) {
+                console.log('No matching documents.');
+              }
+              snapshot.forEach(doc => {
+                arr.push(doc.data())
+              });
+              setData(arr)
+              console.log(arr)
+            })
+            
           }} />
-
-          <SearchResultCard/>
-          <SearchResultBGCard/>
+          {searchResultList}
         </View>
       </ScrollView>
     </SafeAreaView>
