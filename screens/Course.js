@@ -61,7 +61,7 @@ const Course = ({ navigation, route }) => {
                         <Ionicons style={{}} name='time' size={24} color='black' />
                         <Text style={styles.detailItemText}>{time}</Text>
                     </View>
-                    <EnrollButton />
+                    <EnrollButton/>
 
                 </View>
             </SafeAreaView>

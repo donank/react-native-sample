@@ -1,24 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, Image, View } from "react-native";
 import { useNavigation, CommonActions } from '@react-navigation/native';
+import { Ionicons } from "@expo/vector-icons";
 
-const SearchResultBGCard = ({courseTitle, courseCreator, heroImageUrl, pfpurl, description, enrolled, stars, type, location, time, email}) => {
+const SearchResultBGCard = ({ courseTitle, courseCreator, heroImageUrl, pfpurl, description, enrolled, stars, type, location, time, email }) => {
     const navigation = useNavigation();
+    const [tagColor, setTagColor] = useState('')
+    useEffect(() => {
+        switch (type) {
+            case "Professional": {
+                setTagColor('#E28585')
+                break;
+            }
+            case "Vocational": {
+                setTagColor('#F0D07C')
+                break;
+            }
+            case "Academic": {
+                setTagColor('#71ABE5')
+                break;
+            }
+        }
+    });
+
+    const starList = []
+    var i;
+    for (i = 0; i < stars; i++) {
+        starList.push(
+            <Ionicons name='star' size={16} color='black' />
+        )
+    }
 
     return (
         <TouchableOpacity style={styles.container} onPress={() => {
-            navigation.dispatch(CommonActions.navigate({name: 'Course', params: { 
-                name: courseCreator, title: courseTitle, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: heroImageUrl, pfpurl: pfpurl, location: location, time: time, email: email
-            }} ))
-         }}>
-            <Image style={styles.hero} source={{uri:heroImageUrl}} />
+            navigation.dispatch(CommonActions.navigate({
+                name: 'Course', params: {
+                    name: courseCreator, title: courseTitle, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: heroImageUrl, pfpurl: pfpurl, location: location, time: time, email: email
+                }
+            }))
+        }}>
+            <View style={{
+                backgroundColor: tagColor,
+                paddingVertical: 2,
+                paddingHorizontal: 6,
+                borderRadius: 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                left: -10,
+                top: 4,
+                elevation: 1
+            }}>
+                <Text style={styles.categoryTagText}>{type}</Text>
+            </View>
+            <Image style={styles.hero} source={{ uri: heroImageUrl }} />
             <View style={styles.detailWrapper}>
+                <View style={{ flexDirection: 'row' }}>
+                    {starList}
+                </View>
                 <Text style={styles.title}>{courseTitle}</Text>
-                <View style={{flex: 1, flexDirection: 'row', marginTop: 4}}>
-                    <Image style={styles.creatorPfp} source={{uri: pfpurl}} />
+                <View style={{ flex: 1, flexDirection: 'row', marginTop: 4 }}>
+                    <Image style={styles.creatorPfp} source={{ uri: pfpurl }} />
                     <Text style={styles.creator}>{courseCreator}</Text>
                 </View>
+
             </View>
+
         </TouchableOpacity>
     );
 }
@@ -36,7 +83,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         marginLeft: 10,
-        marginTop: 16
+        marginTop: 10,
     },
     title: {
         color: 'black',
@@ -66,7 +113,12 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30,
         borderRadius: 30
-    }
+    },
+    categoryTagText: {
+        color: 'white',
+        fontFamily: 'Roboto_400Regular',
+        fontSize: 14
+    },
 });
 
 export { SearchResultBGCard }

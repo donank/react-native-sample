@@ -4,7 +4,6 @@ import { Toolbar } from "../components/Toolbar";
 import AppLoading from 'expo-app-loading';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
-
 import {
     useFonts,
     Roboto_400Regular,
@@ -20,8 +19,8 @@ const Item = ({ title }) => (
     </View>
 );
 
-const EnrolledCourseProgress = ({ navigation }) => {
-
+const EnrolledCourseProgress = ({ navigation, route }) => {
+    const { title, heroImageUrl} = route.params
     let [data, setData] = useState([]);
     const [todo, setTodo] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
@@ -39,9 +38,9 @@ const EnrolledCourseProgress = ({ navigation }) => {
                 <ScrollView>
                     <Toolbar />
                     <View style={styles.heroContainer}>
-                        <Image style={styles.hero} source={require('../assets/programming.jpg')} />
+                        <Image style={styles.hero} source={{uri:heroImageUrl}} />
                         <View style={styles.heroTint} />
-                        <Text style={styles.courseTitle}>Learn Python Fundamentals</Text>
+                        <Text style={styles.courseTitle}>{title}</Text>
                     </View>
                     <View style={styles.todoContainer}>
                         <View style={styles.todoHeadingContainer}>

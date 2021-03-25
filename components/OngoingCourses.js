@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, Text, Platform, Image, View, Dimensions } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import {
     useFonts,
@@ -8,8 +8,27 @@ import {
 } from '@expo-google-fonts/roboto';
 import { Ionicons } from "@expo/vector-icons";
 
-const OngoingCourses = () => {
+const OngoingCourses = ({ category, title, heroImageUrl }) => {
     const navigation = useNavigation();
+    const [tagColor, setTagColor] = useState('')
+
+    useEffect(() => {
+        switch (category) {
+            case "Professional": {
+                setTagColor('#E28585')
+                break;
+            }
+            case "Vocational": {
+                setTagColor('#F0D07C')
+                break;
+            }
+            case "Academic": {
+                setTagColor('#71ABE5')
+                break;
+            }
+        }
+    });
+
     let [fontsLoaded] = useFonts({
         Roboto_400Regular,
     })
@@ -17,18 +36,32 @@ const OngoingCourses = () => {
         return <AppLoading />;
     } else {
         return (
-            <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate('EnrolledCourseProgress')}}>
-                <Image style={styles.hero} source={require('../assets/programming.jpg')} />
+            <TouchableOpacity style={styles.container} onPress={() => {
+                navigation.dispatch(CommonActions.navigate({
+                    name: 'EnrolledCourseProgress', params: {
+                        title: title, heroImageUrl: heroImageUrl
+                    }
+                }))
+            }}>
+                <Image style={styles.hero} source={{ uri: heroImageUrl }} />
                 <View style={styles.heroTint} />
                 <View style={styles.detailWrapper}>
-                    <View style={styles.categoryTag}>
-                        <Text style={styles.categoryTagText}>Professional</Text>
+                    <View style={{
+                        backgroundColor: tagColor,
+                        padding: 6,
+                        borderRadius: 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: 6,
+                        width: '60%',
+                    }}>
+                        <Text style={styles.categoryTagText}>{category}</Text>
                     </View>
-                    <Text style={styles.title}>Learn Python Fundamentals</Text>
+                    <Text style={styles.title}>{title}</Text>
                 </View>
                 <View style={styles.timeContainer}>
-                    <Ionicons name='time-outline' size={20} color='white' />  
-                    <Text style={styles.timeText}>10 am - 11 am</Text> 
+                    <Ionicons name='time-outline' size={20} color='white' />
+                    <Text style={styles.timeText}>10 am - 11 am</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -60,7 +93,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     detailWrapper: {
-        
+
     },
     categoryTag: {
         width: '60%',

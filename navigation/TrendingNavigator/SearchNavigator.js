@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Trending } from '../../screens/Trending';
 import { Search } from '../../screens/Dashboard/Search';
 import { Course } from '../../screens/Course';
-
+import { CourseAdmin } from '../../screens/CourseAdmin';
 const Stack = createStackNavigator();
 const SearchNavigator = () => {
     return (
@@ -11,6 +11,7 @@ const SearchNavigator = () => {
             <Stack.Screen name="Search" component={Search} />
             <Stack.Screen name="Trending" component={Trending} />
             <Stack.Screen name="Course" component={Course} />
+            <Stack.Screen name="CourseAdmin" component={CourseAdmin} />
         </Stack.Navigator>
     );
 };

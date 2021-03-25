@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text } from "react-native";
 import { Toolbar } from "../../components/Toolbar";
 import { searchSkill } from '../../components/firebase';
-import { SearchResultCard } from "../../components/SearchResultCard";
 import { SearchResultBGCard } from "../../components/SearchResultBGCard";
 
 const Search = () => {

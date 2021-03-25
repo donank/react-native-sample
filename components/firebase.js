@@ -35,6 +35,8 @@ export const passwordReset = email => auth.sendPasswordResetEmail(email);
 
 export const addData = (collection, email, data) => firestore.collection(collection).doc(email).set(data);
 export const searchSkill = (collection, type, condition, name) => firestore.collection(collection).where(type, condition, name);
+export const fetchSeeker = (collection, email) => firestore.collection(collection).doc(email).get()
+export const fetchCourses = (id) => firestore.collection('skills').doc(id).get()
 
 
 
