@@ -56,4 +56,3 @@ Versions of different dependencies and libraries during the development which ar
 - TypeScript - 3.9.5
 - Bable Core - 7.9.0
 - React DOM - 16.13.1
-test
