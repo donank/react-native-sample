@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Image, StyleSheet, Text, ScrollView, View } from "react-native";
+import { SafeAreaView, Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from "react-native";
 import AppLoading from 'expo-app-loading';
 import { Toolbar } from "../../components/Toolbar";
 import {
@@ -7,8 +7,33 @@ import {
   Roboto_400Regular,
 } from '@expo-google-fonts/roboto';
 import { CourseTag } from "../../components/CourseTag";
+import { Ionicons } from "@expo/vector-icons";
+import * as Location from 'expo-location';
 
 const Profile = () => {
+
+  const [location, setLocation] = useState(null);
+
+  const getLocation = async () => {
+    let { status } = await Location.requestPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({}).then((result)=>{
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${result.coords.latitude},${result.coords.longitude}&key=AIzaSyCAdhMPKgoC2DBWtLupsmk5gJbGkROFT5g`)
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json)
+        setLocation(json.results[1].formatted_address)
+      })
+      .catch((error) => console.error(error))
+    });
+    
+    setLocation(location);
+  }
+
   let [fontsLoaded] = useFonts({
     Roboto_400Regular,
   })
@@ -44,6 +69,20 @@ const Profile = () => {
             </View>
           </View>
           <View style={styles.detailsContainer}>
+            <TouchableOpacity style={styles.locationContainer} onPress={() => {
+                getLocation()
+            }}>
+              <View style={styles.locationIconContainer}>
+                <Ionicons
+                  name="location-outline"
+                  size={40}
+                  color="black"
+                />
+              </View>
+              <Text style={styles.locationText}>
+                {location}
+              </Text>
+            </TouchableOpacity>
             <View style={styles.detailLabelContainer}>
 
             </View>
@@ -129,6 +168,32 @@ const styles = StyleSheet.create({
   },
   detailLabelContainer: {
 
+  },
+  locationContainer: {
+    width: '90%',
+    backgroundColor: '#549287',
+    height: 60,
+    alignSelf: 'center',
+    marginVertical: 10,
+    borderRadius: 6,
+    flexDirection: 'row'
+  },
+  locationIconContainer: {
+    backgroundColor: '#61B8A8',
+    margin: 10,
+    borderRadius: 30
+  },
+  locationText: {
+    alignSelf: 'center',
+    color: 'black',
+    ...Platform.select({
+      ios: { fontFamily: 'Arial', },
+      android: { fontFamily: 'Roboto_400Regular' }
+    }),
+    fontWeight: '400',
+    fontSize: 14,
+    marginLeft: 10,
+    width: '60%'
   }
 });
 
