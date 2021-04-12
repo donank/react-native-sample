@@ -9,6 +9,9 @@ const Dashboard = ({ navigation }) => {
   const [data, setData] = useState({})
 
   useEffect(() => {
+    navigation.dangerouslyGetParent().setOptions({
+      tabBarVisible: true
+    });
     fetchData()
   }, []);
 
@@ -25,7 +28,7 @@ const Dashboard = ({ navigation }) => {
       if (!doc.exists) {
         console.log('No matching documents.');
       }
-      
+
       doc.data().ongoing_courses.forEach(item => {
         console.log(item)
         fetchCourses(item).then((doc) => {

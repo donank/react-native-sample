@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Image, StyleSheet, Text, View, ScrollView } from "react-native";
+import { SafeAreaView, Image, StyleSheet, Text, View, ScrollView, BackHandler } from "react-native";
 import { fetchTrendingCourses } from "../components/firebase";
 import { TrendingCourse } from "../components/TrendingCourse";
 
@@ -8,6 +8,10 @@ const Trending = ({ navigation }) => {
   const [trendingCourses, setTrendingCoruses] = useState([])
 
   useEffect(() => {
+    navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+      tabBarVisible: false
+    });
+
     getTrends()
   }, [])
 
@@ -42,8 +46,6 @@ const Trending = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         {trendingCourseList}
-
-
       </ScrollView>
     </SafeAreaView>
   );
