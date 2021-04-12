@@ -1,25 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, Image, TextInput, StyleSheet, View, Dimensions, Text } from "react-native";
+import { fetchTags } from "../../components/firebase";
 import { InterestCard } from "../../components/InterestCard";
+import { InterestSubmitButton } from "../../components/InterestSubmitButton";
 
 const Interests = () => {
 
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    getTags()
+  }, []);
+
+  const getTags = async () => {
+    const snap = await fetchTags().then((snapshot) => {
+      let arr = []
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+      }
+      snapshot.forEach(doc => {
+        arr.push(doc.data())
+      });
+      setTags(arr)
+    })
+  }
+
+  const tagList = tags.map((item, index) => {
+    return (
+      <InterestCard key={index} name={tags[index].name} type={tags[index].category} />
+    )
+  })
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.tagContainer}>
-        <InterestCard name="Economics" type="Academic" />
-        <InterestCard name="Cooking" type="Vocational" />
-        <InterestCard name="Taekwondo" type="Vocational" />
-        <InterestCard name="Physics" type="Academic" />
-        <InterestCard name="Programming" type="Professional" />
-        <InterestCard name="Guitar" type="Vocational" />
-        <InterestCard name="Data Science" type="Professional" />
-        <InterestCard name="Lorem Ipsum" type="Vocational" />
-        <InterestCard name="History" type="Academic" />
+        {tagList}
       </View>
       <Text>Select atleast 5 Interests</Text>
-
+      <InterestSubmitButton />
     </SafeAreaView>
   );
 }

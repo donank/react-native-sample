@@ -43,7 +43,6 @@ const Profile = () => {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <Toolbar />
           <Image style={styles.profilePic} source={require('../../assets/leo-tolstoy.jpg')} />
           <Text style={styles.name}>Leo Tolstoy</Text>
           <View style={styles.tagContainer}>
@@ -99,7 +98,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(184, 210, 208, 0.44)'
+    backgroundColor: 'rgba(184, 210, 208, 0.44)',
   },
   profilePic: {
     width: 120,
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     borderWidth: 3,
     borderColor: '#549287',
-    marginTop: 20
+    marginTop: 60
   },
   name: {
     alignSelf: 'center',

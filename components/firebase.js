@@ -40,6 +40,7 @@ export const fetchSeeker = (collection, email) => firestore.collection(collectio
 export const fetchCourses = (id) => firestore.collection('skills').doc(id).get();
 export const fetchTutor = (id) => firestore.collection('tutors').doc(id).get();
 export const fetchTrendingCourses = (collection) => firestore.collection(collection).where("trending", '==', true);
+export const fetchTags = () => firestore.collection('tags').get();
 
 const pfpStorageRef = firestorage.ref('pfp');
 const heroStorageRef = firestorage.ref('hero');
