@@ -33,6 +33,8 @@ const Interests = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Image style={styles.profilePic} source={require('../../assets/leo-tolstoy.jpg')} />
+      <Text>Change Profile Picture</Text>
       <View style={styles.tagContainer}>
         {tagList}
       </View>
@@ -50,7 +52,15 @@ const styles = StyleSheet.create({
   tagContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-  }
+  },
+  profilePic: {
+    width: 120,
+    height: 120,
+    alignSelf: 'center',
+    borderRadius: 60,
+    borderWidth: 3,
+    borderColor: '#549287',
+  },
 });
 
 export { Interests };
