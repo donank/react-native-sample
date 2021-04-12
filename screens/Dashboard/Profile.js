@@ -9,6 +9,7 @@ import {
 import { CourseTag } from "../../components/CourseTag";
 import { Ionicons } from "@expo/vector-icons";
 import * as Location from 'expo-location';
+import { GMAP_API_KEY } from "@env";
 
 const Profile = () => {
 
@@ -22,11 +23,15 @@ const Profile = () => {
     }
 
     let location = await Location.getCurrentPositionAsync({}).then((result)=>{
-      fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${result.coords.latitude},${result.coords.longitude}&key=AIzaSyCAdhMPKgoC2DBWtLupsmk5gJbGkROFT5g`)
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${result.coords.latitude},${result.coords.longitude}&key=${GMAP_API_KEY}`)
       .then((response) => response.json())
       .then((json) => {
         console.log(json)
-        setLocation(json.results[1].formatted_address)
+        json.results.forEach((item) => {
+          if(item.types[0] == 'locality'){
+            setLocation(item.formatted_address)
+          }
+        })
       })
       .catch((error) => console.error(error))
     });
@@ -190,7 +195,7 @@ const styles = StyleSheet.create({
       android: { fontFamily: 'Roboto_400Regular' }
     }),
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: 16,
     marginLeft: 10,
     width: '60%'
   }

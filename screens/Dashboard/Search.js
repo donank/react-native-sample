@@ -20,7 +20,6 @@ const Search = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Toolbar />
         <View style={styles.contentwrapper}>
           <TextInput style={styles.input} placeholder='Search' onChangeText={(search) => setSearch(search)} onSubmitEditing={async () => {
             let snapshot = await searchSkill('skills', 'type', '==', search).get().then((snapshot)=>{
@@ -49,6 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(184, 210, 208, 0.44)'
   },
   contentwrapper: {
+    marginTop: 40,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
