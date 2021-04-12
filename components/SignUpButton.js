@@ -6,7 +6,7 @@ const SignUpButton = () => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate('SignUp')}}>
+        <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate('Interests')}}>
             <Text>Sign Up</Text>
         </TouchableOpacity>
     );

@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 //import "firebase/database";
 import "firebase/firestore";
 //import "firebase/functions";
-//import "firebase/storage";
+import "firebase/storage";
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -25,6 +25,7 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const firestorage = firebase.storage();
 
 export const loginWithEmail = (email, password) =>
   auth.signInWithEmailAndPassword(email, password);
@@ -39,6 +40,11 @@ export const fetchSeeker = (collection, email) => firestore.collection(collectio
 export const fetchCourses = (id) => firestore.collection('skills').doc(id).get();
 export const fetchTutor = (id) => firestore.collection('tutors').doc(id).get();
 export const fetchTrendingCourses = (collection) => firestore.collection(collection).where("trending", '==', true);
+
+const pfpStorageRef = firestorage.ref('pfp');
+const heroStorageRef = firestorage.ref('hero');
+export const uploadPfpTask = (email, file) => pfpStorageRef.child(email).put(file);
+export const uploadHeroTask = (courseId, file) => heroStorageRef.child(courseId).put(file);
 
 
 
