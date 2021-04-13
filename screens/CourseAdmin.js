@@ -72,7 +72,7 @@ const CourseAdmin = ({ navigation, route }) => {
     } else {
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView>
+                <ScrollView style={{marginTop: 40}}>
                     <Image style={styles.profilePic} source={{ uri: pfpurl }} />
                     <Text style={styles.name}>{name}</Text>
                     <View style={styles.socialButtonContainer}>
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'rgba(184, 210, 208, 0.44)',
-        marginTop: 40
     },
     profilePic: {
         width: 120,

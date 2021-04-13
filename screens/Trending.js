@@ -8,9 +8,9 @@ const Trending = ({ navigation }) => {
   const [trendingCourses, setTrendingCoruses] = useState([])
 
   useEffect(() => {
-    navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
+    /*navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
       tabBarVisible: false
-    });
+    });*/
 
     getTrends()
   }, [])
@@ -44,7 +44,7 @@ const Trending = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{marginTop: 60}}>
         {trendingCourseList}
       </ScrollView>
     </SafeAreaView>
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginTop: 60,
     alignItems: 'center',
   },
 });

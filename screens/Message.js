@@ -69,6 +69,7 @@ const Message = ({ navigation, route }) => {
                     showUserAvatar
                     alwaysShowSend
                     renderSend={renderSend}
+                    
                 />
             </View>
         </SafeAreaView>
