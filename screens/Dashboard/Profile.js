@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from "react-native";
+import { SafeAreaView, Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Pressable } from "react-native";
 import AppLoading from 'expo-app-loading';
 import { Toolbar } from "../../components/Toolbar";
 import {
@@ -47,7 +47,12 @@ const Profile = () => {
   } else {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView>
+        <ScrollView style={{ marginTop: 40}}>
+          <Pressable  style={{alignSelf: 'flex-end', paddingHorizontal: 10, paddingVertical: 4, marginRight: 10, marginTop: 10}} 
+            onPress={() => {console.log("Edit Button Pressed")}}
+          >
+            <Text>Edit</Text>
+          </Pressable>
           <Image style={styles.profilePic} source={require('../../assets/leo-tolstoy.jpg')} />
           <Text style={styles.name}>Leo Tolstoy</Text>
           <View style={styles.tagContainer}>
@@ -112,7 +117,6 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     borderWidth: 3,
     borderColor: '#549287',
-    marginTop: 60
   },
   name: {
     alignSelf: 'center',
