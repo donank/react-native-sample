@@ -26,6 +26,10 @@ const InterestCard = ({ name, type }) => {
                 setTagColor('#71ABE5')
                 break;
             }
+            case "Hobby": {
+                setTagColor('#549287')
+                break;
+            }
         }
     }, []);
 

@@ -17,10 +17,10 @@ const Toolbar = () => {
             />
             <Text style={{fontSize: 26}}>neshM</Text>
             <Ionicons
-                name="md-trending-up-outline"
-                size={40}
+                name="chatbubbles"
+                size={36}
                 color="black"
-                onPress={() => navigation.navigate('Trending')}
+                onPress={() => navigation.navigate('Messages')}
             />
         </View>
         </View>
