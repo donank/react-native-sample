@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { SafeAreaView, Image, StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
 import { OngoingCourses } from "../../components/OngoingCourses";
 import { Toolbar } from "../../components/Toolbar";
@@ -6,7 +6,7 @@ import { fetchSeeker, fetchCourses } from '../../components/firebase';
 
 const Dashboard = ({ navigation }) => {
 
-  const [data, setData] = useState({})
+  const [data, setData] = useState([])
 
   useEffect(() => {
     navigation.dangerouslyGetParent().setOptions({
@@ -15,32 +15,34 @@ const Dashboard = ({ navigation }) => {
     fetchData()
   }, []);
 
-  /*const onGoingCoursesList = data.map((item, index) => {
+  /*
+  const onGoingCoursesList = data.map((item, index) => {
     return (
-      <OngoingCourses category={data[index].}
+      <OngoingCourses key={index} category={data[index].}
       />
     );
   });*/
-
+  let arr = []
   const fetchData = async () => {
     await fetchSeeker('seekers', 'aankit@iitk.ac.in').then((doc) => {
-      console.log("Seeker:", doc.data())
       if (!doc.exists) {
         console.log('No matching documents.');
       }
-
       doc.data().ongoing_courses.forEach(item => {
         console.log(item)
         fetchCourses(item).then((doc) => {
           if (!doc.exists) {
             console.log('No matching documents.');
           }
-          console.log(doc.data())
-          setData(doc.data())
+          arr.push(doc.data())
+          console.log("First Array", arr)
         })
-
+        console.log("Second Array", arr)
       })
-
+      console.log("Third Array", arr)
+    }).then(()=> {
+      console.log("______Array______: ", arr)
+      setData(arr)
     })
   }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Pressable } from "react-native";
+import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Pressable, Dimensions, Platform } from "react-native";
 import AppLoading from 'expo-app-loading';
 import {
     useFonts,
@@ -8,6 +8,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { EnrollButton } from "../components/EnrollButton";
 import { CommonActions } from '@react-navigation/native';
+import MapView, { Marker } from 'react-native-maps';
+import * as Linking from 'expo-linking';
 
 const Course = ({ navigation, route }) => {
     const { name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email } = route.params
@@ -21,49 +23,77 @@ const Course = ({ navigation, route }) => {
     } else {
         return (
             <SafeAreaView style={styles.container}>
-                {bookmark == true ? (
-                    <Pressable style={{ position: 'absolute', top: 60, elevation: 2, right: 20 }} onPress={() => {
-                        console.log("Bookmarkt Clicked")
-                    }}>
-                        <Ionicons style={{}} name='bookmark' size={32} color='white' />
-                    </Pressable>
-                ) : (
-                    <Pressable style={{ position: 'absolute', top: 60, right: 20, elevation: 2 }} onPress={() => {
-                        console.log("Bookmarkt Clicked")
-                    }}>
-                        <Ionicons style={{}} name='bookmark-outline' size={32} color='white' />
-                    </Pressable>
-                )}
-                <View style={styles.imageConainer}>
-                    <Image style={styles.hero} source={{ uri: imageurl }} />
-                    <View style={styles.heroTint} />
-                    <Pressable onPress={() => {
-                        navigation.dispatch(CommonActions.navigate({name: 'CourseAdmin', params: { 
-                            name: name, pfpurl: pfpurl, location: location, email: email
-                        }} ))
-                    }}>
-                        <Image style={styles.creatorPfp} source={{ uri: pfpurl }} />
-                    </Pressable>
-                    <Text style={styles.title}>
-                        {title}
-                    </Text>
-                    <Text style={styles.description}>
-                        {description}
-                    </Text>
-                </View>
-                <View style={styles.courseDetailsContainer}>
-                    <Text style={styles.locationHeading}>Location</Text>
-                    <View style={styles.detailItemContainer}>
-                        <Ionicons style={{}} name='location' size={24} color='black' />
-                        <Text style={styles.detailItemText}>{location}</Text>
+                <ScrollView style={{ flexGrow: 1 }}>
+                    {bookmark == true ? (
+                        <Pressable style={{ position: 'absolute', top: 60, elevation: 2, right: 20 }} onPress={() => {
+                            console.log("Bookmarkt Clicked")
+                        }}>
+                            <Ionicons style={{}} name='bookmark' size={32} color='white' />
+                        </Pressable>
+                    ) : (
+                        <Pressable style={{ position: 'absolute', top: 60, right: 20, elevation: 2 }} onPress={() => {
+                            console.log("Bookmarkt Clicked")
+                        }}>
+                            <Ionicons style={{}} name='bookmark-outline' size={32} color='white' />
+                        </Pressable>
+                    )}
+                    <View style={styles.imageConainer}>
+                        <Image style={styles.hero} source={{ uri: imageurl }} />
+                        <View style={styles.heroTint} />
+                        <Pressable onPress={() => {
+                            navigation.dispatch(CommonActions.navigate({
+                                name: 'CourseAdmin', params: {
+                                    name: name, pfpurl: pfpurl, location: location, email: email
+                                }
+                            }))
+                        }}>
+                            <Image style={styles.creatorPfp} source={{ uri: pfpurl }} />
+                        </Pressable>
+                        <Text style={styles.title}>
+                            {title}
+                        </Text>
+                        <Text style={styles.description}>
+                            {description}
+                        </Text>
                     </View>
-                    <View style={styles.detailItemContainer}>
-                        <Ionicons style={{}} name='time' size={24} color='black' />
-                        <Text style={styles.detailItemText}>{time}</Text>
-                    </View>
-                    <EnrollButton/>
+                    <View style={styles.courseDetailsContainer}>
+                        <Text style={styles.locationHeading}>Location</Text>
+                        <View style={styles.detailItemContainer}>
+                            <Ionicons style={{}} name='location' size={24} color='black' />
+                            <Text style={styles.detailItemText}>{location}</Text>
+                        </View>
+                        <View style={styles.detailItemContainer}>
+                            <Ionicons style={{}} name='time' size={24} color='black' />
+                            <Text style={styles.detailItemText}>{time}</Text>
+                        </View>
+                        <MapView style={styles.map}
+                            onPress={() => {
+                                let lat = 37.78825
+                                let lng = -122.4324
+                                const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+                                const latLng = `${lat},${lng}`;
+                                const label = 'Custom Label';
+                                const url = Platform.select({
+                                    ios: `${scheme}${label}@${latLng}`,
+                                    android: `${scheme}${latLng}(${label})`
+                                });
+                                Linking.openURL(url);
+                            }}
+                            initialRegion={{
+                                latitude: 37.78825,
+                                longitude: -122.4324,
+                                latitudeDelta: 0.0922,
+                                longitudeDelta: 0.0421,
+                            }}>
+                            <Marker style={styles.map} title="Marker"
+                                coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+                            />
+                        </MapView>
 
-                </View>
+                    </View>
+                </ScrollView>
+                <EnrollButton />
+
             </SafeAreaView>
         );
     }
@@ -76,6 +106,7 @@ const styles = StyleSheet.create({
     },
     imageConainer: {
         flex: 0.6,
+        height: 460,
         justifyContent: 'flex-end',
     },
     courseDetailsContainer: {
@@ -145,7 +176,14 @@ const styles = StyleSheet.create({
         borderColor: '#549287',
         borderRadius: 42,
         margin: 10,
-    }
+    },
+    map: {
+        width: '90%',
+        height: 200,
+        alignSelf: 'center',
+        marginBottom: 70,
+        marginTop: 20
+    },
 });
 
 export { Course };
