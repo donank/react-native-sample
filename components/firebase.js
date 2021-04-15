@@ -40,7 +40,13 @@ export const fetchSeeker = (collection, email) => firestore.collection(collectio
 export const fetchCourses = (id) => firestore.collection('skills').doc(id).get();
 export const fetchTutor = (id) => firestore.collection('tutors').doc(id).get();
 export const fetchTrendingCourses = (collection) => firestore.collection(collection).where("trending", '==', true);
+export const fetchLocalTrendingCourses = (loc) => firestore.collection('skills').where("trending", '==', true).where("gmaploc", '==', loc).get();
 export const fetchTags = () => firestore.collection('tags').get();
+export const fetchTagById = (id) => firestore.collection('tags').doc(id).get();
+export const updateCoordinates = (email, lat, long) => firestore.collection('seekers').doc(email).update({coordinates: {
+  U: lat,
+  k: long
+}})
 
 const pfpStorageRef = firestorage.ref('pfp');
 const heroStorageRef = firestorage.ref('hero');

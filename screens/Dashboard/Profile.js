@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import { SafeAreaView, Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Pressable } from "react-native";
 import AppLoading from 'expo-app-loading';
 import { Toolbar } from "../../components/Toolbar";
@@ -10,10 +10,13 @@ import { CourseTag } from "../../components/CourseTag";
 import { Ionicons } from "@expo/vector-icons";
 import * as Location from 'expo-location';
 import { GMAP_API_KEY } from "@env";
+import { fetchSeeker, updateCoordinates, fetchTagById, fetchTags } from '../../components/firebase';
 
 const Profile = () => {
 
   const [location, setLocation] = useState(null);
+  const [userData, setUserData] = useState({});
+  const [interestTags, setInterestTags] = useState([]);
 
   const getLocation = async () => {
     let { status } = await Location.requestPermissionsAsync();
@@ -22,22 +25,67 @@ const Profile = () => {
       return;
     }
 
-    let location = await Location.getCurrentPositionAsync({}).then((result)=>{
-      fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${result.coords.latitude},${result.coords.longitude}&key=${GMAP_API_KEY}`)
+    await Location.getCurrentPositionAsync({}).then((result) => {
+      fetchLocation(result.coords.latitude, result.coords.longitude)
+      updateCoordinates(userData.email, result.coords.latitude, result.coords.longitude).then(() => {
+        console.log("Coordinates Updated")
+      })
+    });
+  }
+
+
+
+  const fetchLocation = (lat, long) => {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${GMAP_API_KEY}`)
       .then((response) => response.json())
       .then((json) => {
-        console.log(json)
         json.results.forEach((item) => {
-          if(item.types[0] == 'locality'){
+          if (item.types[0] == 'locality') {
             setLocation(item.formatted_address)
           }
         })
       })
       .catch((error) => console.error(error))
-    });
-    
-    setLocation(location);
   }
+
+  useEffect(() => {
+    fetchData().finally(() => {
+      let interests = []
+      
+      fetchTags().then((snapshot) => {
+        if (snapshot.empty) {
+          console.log('No matching documents.');
+        }
+        snapshot.forEach(doc => {
+          userData.interests.forEach(item => {
+            if (item == doc.data().id) {
+              interests.push(doc.data())
+            }
+          })
+        });
+        setInterestTags(interests);
+        //console.log("Interests:", interests)
+      })
+      console.log(interestTags)
+    })
+  }, [])
+
+  const fetchData = async () => {
+    await fetchSeeker('seekers', 'aankit@iitk.ac.in').then((doc) => {
+      if (!doc.exists) {
+        console.log('No matching documents.');
+      }
+      setUserData(doc.data());
+      fetchLocation(doc.data().coordinates.U, doc.data().coordinates.k)
+      
+    });
+  }
+  
+    const courseTaglist = interestTags.map((item, index) => {
+      return (
+        <CourseTag key={index} type={item.category} name={item.name} />
+      );
+    });
 
   let [fontsLoaded] = useFonts({
     Roboto_400Regular,
@@ -47,39 +95,35 @@ const Profile = () => {
   } else {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{ marginTop: 40}}>
-          <Pressable  style={{alignSelf: 'flex-end', paddingHorizontal: 10, paddingVertical: 4, marginRight: 10, marginTop: 10}} 
-            onPress={() => {console.log("Edit Button Pressed")}}
+        <ScrollView style={{ marginTop: 40 }}>
+          <Pressable style={{ alignSelf: 'flex-end', paddingHorizontal: 10, paddingVertical: 4, marginRight: 10, marginTop: 10 }}
+            onPress={() => { console.log("Edit Button Pressed") }}
           >
             <Text>Edit</Text>
           </Pressable>
-          <Image style={styles.profilePic} source={require('../../assets/leo-tolstoy.jpg')} />
-          <Text style={styles.name}>Leo Tolstoy</Text>
+          <Image style={styles.profilePic} source={{ uri: userData.pfpurl }} />
+          <Text style={styles.name}>{userData.name}</Text>
           <View style={styles.tagContainer}>
-            <CourseTag type="Professional" name="Programming" />
-            <CourseTag type="Vocational" name="Cooking" />
-            <CourseTag type="Academic" name="Political Philosophy" />
-            <CourseTag type="Vocational" name="Plumbing" />
-            <CourseTag type="Academic" name="Differential Equations" />
-            <CourseTag type="Professional" name="Fundamental Analysis and Trading Techniques" />
+            {courseTaglist}
+            
           </View>
           <View style={styles.numericalDetailsContainer}>
             <View style={styles.numericalDetailsItemContainer}>
               <Text style={styles.detailsItemTitle}>Total Score</Text>
-              <Text style={styles.detailsItemValue}>100</Text>
+              <Text style={styles.detailsItemValue}>{userData.total_courses_enrolled * 10}</Text>
             </View>
             <View style={styles.numericalDetailsItemContainer}>
               <Text style={styles.detailsItemTitle}>Enrolled</Text>
-              <Text style={styles.detailsItemValue}>4</Text>
+              <Text style={styles.detailsItemValue}>{userData.total_courses_enrolled}</Text>
             </View>
             <View style={styles.numericalDetailsItemContainer}>
               <Text style={styles.detailsItemTitle}>Completed</Text>
-              <Text style={styles.detailsItemValue}>2</Text>
+              <Text style={styles.detailsItemValue}>{userData.completed_course}</Text>
             </View>
           </View>
           <View style={styles.detailsContainer}>
             <TouchableOpacity style={styles.locationContainer} onPress={() => {
-                getLocation()
+              getLocation()
             }}>
               <View style={styles.locationIconContainer}>
                 <Ionicons
@@ -206,3 +250,11 @@ const styles = StyleSheet.create({
 });
 
 export { Profile };
+
+/*
+<CourseTag type="Professional" name="Programming" />
+            <CourseTag type="Vocational" name="Cooking" />
+            <CourseTag type="Academic" name="Political Philosophy" />
+            <CourseTag type="Vocational" name="Plumbing" />
+            <CourseTag type="Academic" name="Differential Equations" />
+            <CourseTag type="Professional" name="Fundamental Analysis and Trading Techniques" />*/
