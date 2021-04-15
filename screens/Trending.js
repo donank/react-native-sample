@@ -38,7 +38,8 @@ const Trending = ({ navigation }) => {
         pfpurl={trendingCourses[index].pfpurl}
         location={trendingCourses[index].location}
         time={trendingCourses[index].time}
-        email={trendingCourses[index].email} />
+        email={trendingCourses[index].email}
+        coordinates={trendingCourses[index].coordinates} />
     )
   })
 

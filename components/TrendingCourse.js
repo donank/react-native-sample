@@ -8,7 +8,7 @@ import {
 } from '@expo-google-fonts/roboto';
 import { Ionicons } from "@expo/vector-icons";
 
-const TrendingCourse = ({ name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email }) => {
+const TrendingCourse = ({ name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email, coordinates }) => {
     const navigation = useNavigation();
     const [tagColor, setTagColor] = useState('')
 
@@ -45,7 +45,9 @@ const TrendingCourse = ({ name, title, description, enrolled, stars, type, image
         return (
             <TouchableOpacity style={styles.container} onPress={() => { 
                 navigation.dispatch(CommonActions.navigate({name: 'Course', params: { 
-                    name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time, email: email
+                    name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, 
+                    mageurl: imageurl, pfpurl: pfpurl, location: location, time: time, email: email,
+                    coordinates: coordinates
                 }} ))
                 }}>
                 <View style={{ flex: 0.13, backgroundColor: '#fff' }}>

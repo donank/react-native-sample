@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Pressable, Dimensions, Platform } from "react-native";
 import AppLoading from 'expo-app-loading';
 import {
@@ -12,9 +12,13 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 
 const Course = ({ navigation, route }) => {
-    const { name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email } = route.params
+    const { name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email, coordinates } = route.params
     const [search, setSearch] = useState('')
     const [bookmark, setBookmark] = useState(false)
+
+    useEffect(()=> {
+        console.log("Coordinates: ", coordinates)
+    }, [])
     let [fontsLoaded] = useFonts({
         Roboto_400Regular,
     })
@@ -68,8 +72,8 @@ const Course = ({ navigation, route }) => {
                         </View>
                         <MapView style={styles.map}
                             onPress={() => {
-                                let lat = 37.78825
-                                let lng = -122.4324
+                                let lat = coordinates.U
+                                let lng = coordinates.k
                                 const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
                                 const latLng = `${lat},${lng}`;
                                 const label = 'Custom Label';
@@ -80,13 +84,13 @@ const Course = ({ navigation, route }) => {
                                 Linking.openURL(url);
                             }}
                             initialRegion={{
-                                latitude: 37.78825,
-                                longitude: -122.4324,
+                                latitude: coordinates.U,
+                                longitude: coordinates.k,
                                 latitudeDelta: 0.0922,
                                 longitudeDelta: 0.0421,
                             }}>
                             <Marker style={styles.map} title="Marker"
-                                coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+                                coordinate={{ latitude: coordinates.U, longitude: coordinates.k }}
                             />
                         </MapView>
 
