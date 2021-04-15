@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Pressable, FlatList, ToastAndroid } from "react-native";
-import { Toolbar } from "../../components/Toolbar";
+import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Pressable, FlatList, ToastAndroid, Modal, Picker } from "react-native";
 import { searchSkill } from '../../components/firebase';
 import { SearchResultBGCard } from "../../components/SearchResultBGCard";
 import { Ionicons } from "@expo/vector-icons";
 import { AdminCourseCard } from "../../components/AdminCourseCard";
-
 
 const Search = () => {
   const [search, setSearch] = useState('');
@@ -16,6 +14,25 @@ const Search = () => {
   const [hobbyData, setHobbyData] = useState([]);
   const [searched, setSearched] = useState(false);
   const [noResult, setNoResult] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [location, setLocation] = useState(0);
+  const [category, setCategory] = useState(0);
+
+  const types = ["Local", "Global"];
+
+  const typesMap = types.map((item, index) => {
+    return (
+      <Picker.Item key={index} label={item} value={index} />
+    )
+  });
+
+  const categories = ["All", "Academic", "Professional", "Vocational", "Hobby"];
+
+  const categoriesMap = categories.map((item, index) => {
+    return (
+      <Picker.Item key={index} label={item} value={index} />
+    )
+  });
 
   const Item = ({ title }) => (
     <TouchableOpacity style={styles.tagContainer} onPress={() => {
@@ -152,7 +169,7 @@ const Search = () => {
               fetchSearchData(search)
             }} />
             <Ionicons style={{ marginLeft: -34, alignSelf: 'center' }} name='funnel' size={24} color='#4A5568' onPress={() => {
-              console.log("Filter Clicked")
+              setModalVisible(!modalVisible);
             }} />
           </View>
           <FlatList
@@ -192,6 +209,40 @@ const Search = () => {
           </View>
         </View>
       </ScrollView>
+      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}>
+        <View style={styles.modalView}>
+          <View style={styles.modalCard}>
+            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around' }}>
+              <Text style={{fontSize: 16, alignSelf: 'center'}}>Location</Text>
+              <Picker
+                selectedValue={location}
+                style={styles.pickerStyle}
+                onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}>
+                {typesMap}
+              </Picker>
+            </View>
+            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around' }}>
+              <Text style={{fontSize: 16, alignSelf: 'center'}}>Category</Text>
+              <Picker
+                selectedValue={category}
+                style={styles.pickerStyle}
+                onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
+                {categoriesMap}
+              </Picker>
+            </View>
+            <View style={styles.modalButtonContainer}>
+              <Pressable
+                style={styles.modalCloseButton}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.modalButtonText}>Close</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -224,7 +275,72 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 12,
     marginHorizontal: 6
-  }
+  },
+  modalView: {
+    flex: 1,
+    position: "absolute",
+    width: '100%',
+    bottom: 0,
+  },
+  modalCard: {
+    padding: 10,
+    alignSelf: 'center',
+    width: '100%',
+    alignItems: "center",
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalButtonContainer: {
+    flexDirection: 'row'
+  },
+  modalCloseButton: {
+    backgroundColor: '#E28585',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    margin: 10,
+    width: '50%',
+    height: 42,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalSaveButton: {
+    backgroundColor: '#549287',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    margin: 10,
+    width: '50%',
+    height: 42,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalButtonText: {
+    fontFamily: 'Roboto_400Regular',
+    fontSize: 16,
+  },
+  modalTextInput: {
+    backgroundColor: '#E5E5E5',
+    width: '100%',
+    color: 'black',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+    fontFamily: 'Roboto_400Regular',
+    fontSize: 16
+  },
+  pickerStyle: {
+    height: 40,
+    width: '40%',
+    color: 'black'
+  },
 });
 
 export { Search };
