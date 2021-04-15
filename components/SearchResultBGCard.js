@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, Text, Platform, Image, View } from "react
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { Ionicons } from "@expo/vector-icons";
 
-const SearchResultBGCard = ({ courseTitle, courseCreator, heroImageUrl, pfpurl, description, enrolled, stars, type, location, time, email }) => {
+const SearchResultBGCard = ({ courseTitle, courseCreator, heroImageUrl, pfpurl, description, enrolled, stars, type, location, time, email, coordinates }) => {
     const navigation = useNavigation();
     const [tagColor, setTagColor] = useState('')
     useEffect(() => {
@@ -35,7 +35,9 @@ const SearchResultBGCard = ({ courseTitle, courseCreator, heroImageUrl, pfpurl, 
         <TouchableOpacity style={styles.container} onPress={() => {
             navigation.dispatch(CommonActions.navigate({
                 name: 'Course', params: {
-                    name: courseCreator, title: courseTitle, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: heroImageUrl, pfpurl: pfpurl, location: location, time: time, email: email
+                    name: courseCreator, title: courseTitle, description: description, enrolled: enrolled, stars: stars, 
+                    type: type, imageurl: heroImageUrl, pfpurl: pfpurl, location: location, time: time, email: email,
+                    coordinates: coordinates
                 }
             }))
         }}>

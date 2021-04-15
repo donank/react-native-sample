@@ -53,14 +53,16 @@ const CourseAdmin = ({ navigation, route }) => {
     const courseList = courses.map((item, index) => {
         return (
             <AdminCourseCard key={index}
-                name={courses[index].creator_name} title={courses[index].name}
-                description={courses[index].description}
-                enrolled={courses[index].enrolled} stars={courses[index].rating} type={courses[index].type}
-                imageurl={courses[index].heroImageUrl}
-                pfpurl={courses[index].pfpurl}
-                location={courses[index].location}
-                time={courses[index].time}
-                email={courses[index].email} />
+                name={item.creator_name} title={item.name}
+                description={item.description}
+                enrolled={item.enrolled} stars={item.rating} type={item.type}
+                imageurl={item.heroImageUrl}
+                pfpurl={item.pfpurl}
+                location={item.location}
+                time={item.time}
+                email={item.email}
+                category={item.category_type}
+                coordinates={item.coordinates} />
         )
     })
 

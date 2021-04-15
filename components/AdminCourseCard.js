@@ -8,8 +8,39 @@ import {
 } from '@expo-google-fonts/roboto';
 import { Ionicons } from "@expo/vector-icons";
 
-const AdminCourseCard = ({name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email}) => {
+const AdminCourseCard = ({ name, title, description, enrolled, stars, type, imageurl, pfpurl, location, time, email, category, coordinates }) => {
     const navigation = useNavigation();
+
+    const [tagColor, setTagColor] = useState('');
+    useEffect(() => {
+        switch (category) {
+            case "Professional": {
+                setTagColor('#E28585')
+                break;
+            }
+            case "Vocational": {
+                setTagColor('#F0D07C')
+                break;
+            }
+            case "Academic": {
+                setTagColor('#71ABE5')
+                break;
+            }
+            case "Hobby": {
+                setTagColor('#549287')
+                break;
+            }
+        }
+    }, []);
+
+    const starList = []
+    var i;
+    for (i = 0; i < stars; i++) {
+        starList.push(
+            <Ionicons name='star' size={20} color='white' />
+        )
+    }
+
     let [fontsLoaded] = useFonts({
         Roboto_400Regular,
     })
@@ -18,18 +49,36 @@ const AdminCourseCard = ({name, title, description, enrolled, stars, type, image
     } else {
         return (
             <TouchableOpacity style={styles.container} onPress={() => {
-                navigation.dispatch(CommonActions.navigate({name: 'Course', params: { 
-                    name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: type, imageurl: imageurl, pfpurl: pfpurl, location: location, time: time, email: email
-                }} ))
+                navigation.dispatch(CommonActions.navigate({
+                    name: 'Course', params: {
+                        name: name, title: title, description: description, enrolled: enrolled, stars: stars, type: category,
+                        imageurl: imageurl, pfpurl: pfpurl, location: location, time: time, email: email,
+                        coordinates: coordinates
+                    }
+                }))
             }}>
-                <Image style={styles.hero} source={{uri:imageurl}} />
+                <Image style={styles.hero} source={{ uri: imageurl }} />
                 <View style={styles.heroTint} />
                 <View style={styles.detailWrapper}>
-                    <View style={styles.categoryTag}>
-                        <Text style={styles.categoryTagText}>{type}</Text>
+                    <View style={{
+                        width: '60%',
+                        backgroundColor: tagColor,
+                        padding: 6,
+                        borderRadius: 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: 6,
+                    }}>
+                        <Text style={styles.categoryTagText}>{category}</Text>
                     </View>
+                    
                     <Text style={styles.title}>{title}</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: 10 }}>
+                    {starList}
                 </View>
+
+                </View>
+                
             </TouchableOpacity>
         );
     }
@@ -60,16 +109,10 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     detailWrapper: {
-        
+
     },
     categoryTag: {
-        width: '60%',
-        backgroundColor: '#E28585',
-        padding: 6,
-        borderRadius: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 6,
+
     },
     categoryTagText: {
         color: 'white',

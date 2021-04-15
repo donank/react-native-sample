@@ -8,13 +8,13 @@ const Trending = ({ navigation }) => {
 
   const [trendingCourses, setTrendingCoruses] = useState([])
   const [modalVisible, setModalVisible] = useState(false);
-  const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(true)
   useEffect(() => {
     /*navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
       tabBarVisible: false
     });*/
     setClicked(!clicked)
-    getTrends()
+    getLocalTrends()
   }, [])
 
   const getTrends = async () => {
