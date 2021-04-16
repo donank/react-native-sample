@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Pressable, FlatList, ToastAndroid, Modal, Picker } from "react-native";
-import { searchSkill } from '../../components/firebase';
+import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Pressable, FlatList, ToastAndroid, Modal, Picker, Switch } from "react-native";
+import { searchSkill,fetchSkills } from '../../components/firebase';
 import { SearchResultBGCard } from "../../components/SearchResultBGCard";
 import { Ionicons } from "@expo/vector-icons";
 import { AdminCourseCard } from "../../components/AdminCourseCard";
+import MapView, { Marker } from 'react-native-maps';
+import * as Linking from 'expo-linking';
 
 const Search = () => {
   const [search, setSearch] = useState('');
@@ -17,6 +19,7 @@ const Search = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [location, setLocation] = useState(0);
   const [category, setCategory] = useState(0);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   const types = ["Local", "Global"];
 
@@ -128,6 +131,40 @@ const Search = () => {
     })
   }
 
+  const fetchAllSearchData = async (location) => {
+    if(location == 0){
+      let snapshot = await searchSkill('skills', 'gmaploc', '==', 'Kanpur, Uttar Pradesh, India').get().then((snapshot) => {
+        let arr = []
+        if (snapshot.empty) {
+          console.log('No matching documents.');
+          setNoResult(!noResult);
+          ToastAndroid.show('No Result', ToastAndroid.SHORT)
+        }
+        snapshot.forEach(doc => {
+          arr.push(doc.data())
+        });
+        setNoResult(!noResult);
+        setSearched(true)
+        setData(arr)
+      })
+    }else{
+      let snapshot = await fetchSkills().then((snapshot) => {
+        let arr = []
+        if (snapshot.empty) {
+          console.log('No matching documents.');
+          setNoResult(!noResult);
+          ToastAndroid.show('No Result', ToastAndroid.SHORT)
+        }
+        snapshot.forEach(doc => {
+          arr.push(doc.data())
+        });
+        setNoResult(!noResult);
+        setSearched(true)
+        setData(arr)
+      })
+    }
+  }
+
   const fetchCategorySearchData = async (category) => {
     let snapshot = await searchSkill('skills', 'category_type', '==', category).get().then((snapshot) => {
       let arr = []
@@ -160,13 +197,21 @@ const Search = () => {
     })
   }
 
+  const markerList = data.map((item, index) => {
+    return (
+      <Marker key={index} style={styles.map} title="Marker"
+      coordinate={{ latitude: item.coordinates.U, longitude: item.coordinates.k }}
+    />
+    );
+  })
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.contentwrapper}>
           <View style={{ flexDirection: 'row', width: '98%', alignSelf: 'center' }}>
             <TextInput style={styles.input} placeholder='Search' onChangeText={(search) => setSearch(search)} onSubmitEditing={() => {
-              fetchSearchData(search)
+              search == '' ? fetchAllSearchData(location) : fetchSearchData(search)
             }} />
             <Ionicons style={{ marginLeft: -34, alignSelf: 'center' }} name='funnel' size={24} color='#4A5568' onPress={() => {
               setModalVisible(!modalVisible);
@@ -181,6 +226,52 @@ const Search = () => {
           />
           {searched ? (
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+              {location == 0 && searched ? (
+              <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', marginRight: 10}}>
+                <Text style={{ fontSize: 16, alignSelf: 'center' }}>Show Map</Text>
+                <View style={{  height: 40, alignItems: 'center', justifyContent: 'center' }}>
+                  <Switch
+                    onValueChange={() => {
+                      setIsEnabled(previousState => !previousState)
+                    }}
+                    value={isEnabled}
+                  />
+                </View>
+              </View>
+            ) : (
+              <>
+              </>
+            )}
+              {isEnabled && data != [] ? (
+                <MapView style={styles.map}
+                  onPress={() => {
+                    console.log("Map Clicked", data[0].coordinates.U)
+                    let lat = data[0].coordinates.U
+                    let lng = data[0].coordinates.k
+                    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+                    const latLng = `${lat},${lng}`;
+                    const label = 'Custom Label';
+                    const url = Platform.select({
+                      ios: `${scheme}${label}@${latLng}`,
+                      android: `${scheme}${latLng}(${label})`
+                    });
+                    Linking.openURL(url);
+                  }}
+                  initialRegion={{
+                    latitude: data[0].coordinates.U,
+                    longitude: data[0].coordinates.k,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}>
+                  <Marker style={styles.map} title="Marker"
+                    coordinate={{ latitude: 26.5118848, longitude: 80.2325552 }}
+                    image={{uri: 'https://icons.veryicon.com/png/128/transport/map-1/map-pin-user-fill-1.png'}}
+                  />
+                  {markerList}
+                </MapView>
+              ) : (
+                <></>
+              )}
               {searchResultList}
             </View>
             /*
@@ -215,7 +306,7 @@ const Search = () => {
         <View style={styles.modalView}>
           <View style={styles.modalCard}>
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around' }}>
-              <Text style={{fontSize: 16, alignSelf: 'center'}}>Location</Text>
+              <Text style={{ fontSize: 16, alignSelf: 'center' }}>Location</Text>
               <Picker
                 selectedValue={location}
                 style={styles.pickerStyle}
@@ -224,7 +315,7 @@ const Search = () => {
               </Picker>
             </View>
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-around' }}>
-              <Text style={{fontSize: 16, alignSelf: 'center'}}>Category</Text>
+              <Text style={{ fontSize: 16, alignSelf: 'center' }}>Category</Text>
               <Picker
                 selectedValue={category}
                 style={styles.pickerStyle}
@@ -232,6 +323,7 @@ const Search = () => {
                 {categoriesMap}
               </Picker>
             </View>
+            
             <View style={styles.modalButtonContainer}>
               <Pressable
                 style={styles.modalCloseButton}
@@ -341,6 +433,13 @@ const styles = StyleSheet.create({
     width: '40%',
     color: 'black'
   },
+  map: {
+    width: '90%',
+    height: 200,
+    alignSelf: 'center',
+    marginBottom: 70,
+    marginTop: 20
+  }
 });
 
 export { Search };

@@ -35,14 +35,21 @@ const Messages = () => {
   const messageList = messages.map((item, index) => {
     return (
       <TouchableOpacity style={{
-        borderBottomWidth: 1,
-        padding: 10
+        padding: 10,
+        marginTop: 10
       }} onPress={()=> {
 
       }}>
-        <View style={{ flexDirection: 'row' }}>
-          <Image style={{width: 40, height: 40, alignSelf: 'center', marginRight: 10, borderRadius: 16}} source={{uri: item.pfpurl}} />
-          <Text>{item.name}</Text>
+        <View style={{ flexDirection: 'row', }}>
+          <Image style={{width: 48, height: 48, alignSelf: 'center', marginRight: 10, borderRadius: 30}} source={{uri: item.pfpurl}} />
+          <View style={{flex: 1}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={{fontSize: 16}}>{item.name}</Text>
+          <Text style={{color: '#8E8A8A'}}>6:40 am</Text>
+          </View>
+          <Text style={{color: '#8E8A8A'}}>Thank you</Text>
+          <View style={{borderWidth: 0.2, marginTop: 14, borderColor: '#C5C5C5'}}></View>
+          </View>
         </View>
       </TouchableOpacity>
     );
