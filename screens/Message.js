@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
     giftedChatContainer: {
         flex: 1,
         marginTop: 40,
-        marginBottom: 10
     }
 });
 

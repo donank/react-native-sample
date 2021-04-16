@@ -25,7 +25,7 @@ const DashboardNavigator = ({route}) => {
         }}>
             <Drawer.Screen name="Home" component={BottomTabNavigator}/>
             <Drawer.Screen name="History" component={History}/>
-            <Drawer.Screen name="Settings" component={Settings}/>
+            <Drawer.Screen name="Categories" component={Settings}/>
             <Drawer.Screen name="Logout" component={Login}/>
         </Drawer.Navigator>
     );

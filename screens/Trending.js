@@ -9,6 +9,9 @@ const Trending = ({ navigation }) => {
   const [trendingCourses, setTrendingCoruses] = useState([])
   const [modalVisible, setModalVisible] = useState(false);
   const [clicked, setClicked] = useState(true)
+  const [globalBackgroundColor, setGlobalBackgroundColor] = useState('#C4C4C4')
+  const [localBackgroundColor, setLocalBackgroundColor] = useState('#746D6D')
+
   useEffect(() => {
     /*navigation.dangerouslyGetParent().dangerouslyGetParent().setOptions({
       tabBarVisible: false
@@ -60,22 +63,39 @@ const Trending = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Ionicons style={{ position: 'absolute', right: 20, top: 60, elevation: 10 }} name='funnel' size={24} color='#4A5568' onPress={() => {
-        console.log("filter clicked", clicked)
-        clicked ? getLocalTrends() : getTrends()
-        setClicked(!clicked)
-
-      }} />
-      <ScrollView style={{ marginTop: 80 }}>
-        {clicked ? (
-          <Text>
-            Showing Global Trends
-          </Text>
-        ) : (
-          <Text>
-            Showing Local Trends
-          </Text>
-        )}
+      
+      <View style={{flexDirection: 'row', marginTop: 80}}>
+        <Pressable style={{
+          backgroundColor: globalBackgroundColor,
+          padding: 10,
+          borderRightWidth: 1,
+          borderRightColor: 'white',
+          borderTopLeftRadius: 16,
+          borderBottomLeftRadius: 16,
+          paddingHorizontal: 16
+        }} onPress={() => {
+          getTrends()
+          setGlobalBackgroundColor('#746D6D')
+          setLocalBackgroundColor('#C4C4C4')
+        }}>
+          <Text>Global</Text>
+        </Pressable>
+        <Pressable style={{
+          backgroundColor: localBackgroundColor,
+          padding: 10,
+          borderTopRightRadius: 16,
+          borderBottomRightRadius: 16,
+          paddingHorizontal: 16
+        }} onPress={() => {
+          getLocalTrends()
+          setGlobalBackgroundColor('#C4C4C4')
+          setLocalBackgroundColor('#746D6D')
+        }}>
+          <Text>Local</Text>
+        </Pressable>
+      </View>
+      <ScrollView style={{  }}>
+        
         {trendingCourseList}
       </ScrollView>
       <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {

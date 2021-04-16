@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, SafeAreaView, Pressable, Image } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { fetchSeeker, fetchTutor } from '../components/firebase';
+import { CommonActions } from '@react-navigation/native';
 
-const Messages = () => {
+const Messages = ({navigation}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -25,7 +25,6 @@ const Messages = () => {
         console.log("Item:", item)
 
         fetchTutor(item).then((doc1) => {
-          console.log(doc1.data())
           setMessages([...messages, doc1.data()]);
         });
       });
@@ -38,7 +37,9 @@ const Messages = () => {
         padding: 10,
         marginTop: 10
       }} onPress={()=> {
-
+        navigation.dispatch(CommonActions.navigate({name: 'Message', params: { 
+          pfpurl: item.pfpurl, name: item.pfpurl
+      }} ))
       }}>
         <View style={{ flexDirection: 'row', }}>
           <Image style={{width: 48, height: 48, alignSelf: 'center', marginRight: 10, borderRadius: 30}} source={{uri: item.pfpurl}} />
@@ -47,7 +48,7 @@ const Messages = () => {
           <Text style={{fontSize: 16}}>{item.name}</Text>
           <Text style={{color: '#8E8A8A'}}>6:40 am</Text>
           </View>
-          <Text style={{color: '#8E8A8A'}}>Thank you</Text>
+          <Text style={{color: '#8E8A8A'}}>Hello</Text>
           <View style={{borderWidth: 0.2, marginTop: 14, borderColor: '#C5C5C5'}}></View>
           </View>
         </View>

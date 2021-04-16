@@ -49,6 +49,11 @@ export const updateCoordinates = (email, lat, long) => firestore.collection('see
   k: long
 }})
 
+const arrayUnion = firebase.firestore.FieldValue.arrayUnion
+export const updateMessageList = (seekerEmail, tutorEmail) => firestore.collection('seekers').doc(seekerEmail).update({
+  messages: arrayUnion(tutorEmail)
+})
+
 const pfpStorageRef = firestorage.ref('pfp');
 const heroStorageRef = firestorage.ref('hero');
 export const uploadPfpTask = (email, file) => pfpStorageRef.child(email).put(file);

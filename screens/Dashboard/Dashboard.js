@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { SafeAreaView, Image, StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
+import { SafeAreaView, Image, StyleSheet, Text, View, ScrollView, Dimensions, FlatList } from "react-native";
 import { OngoingCourses } from "../../components/OngoingCourses";
 import { Toolbar } from "../../components/Toolbar";
 import { fetchSeeker, fetchCourses } from '../../components/firebase';
@@ -7,12 +7,13 @@ import { fetchSeeker, fetchCourses } from '../../components/firebase';
 const Dashboard = ({ navigation }) => {
 
   const [data, setData] = useState([])
-
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     navigation.dangerouslyGetParent().setOptions({
       tabBarVisible: true
     });
     fetchData()
+    console.log("DAta:", data)
   }, []);
 
   /*
@@ -22,7 +23,11 @@ const Dashboard = ({ navigation }) => {
       />
     );
   });*/
-  let arr = []
+
+  const renderItem2 = ({ item }) => (
+    <OngoingCourses category={item.category_type} title={item.name} heroImageUrl={item.heroImageUrl} />
+  );
+
   const fetchData = async () => {
     await fetchSeeker('seekers', 'aankit@iitk.ac.in').then((doc) => {
       if (!doc.exists) {
@@ -30,20 +35,14 @@ const Dashboard = ({ navigation }) => {
       }
       doc.data().ongoing_courses.forEach(item => {
         console.log(item)
-        fetchCourses(item).then((doc) => {
-          if (!doc.exists) {
+        fetchCourses(item).then((doc1) => {
+          if (!doc1.exists) {
             console.log('No matching documents.');
           }
-          arr.push(doc.data())
-          console.log("First Array", arr)
+          setData([...data, doc1.data()])
         })
-        console.log("Second Array", arr)
       })
-      console.log("Third Array", arr)
-    }).then(()=> {
-      console.log("______Array______: ", arr)
-      setData(arr)
-    })
+    }).finally(() => setLoading(false))
   }
 
   return (
@@ -56,7 +55,12 @@ const Dashboard = ({ navigation }) => {
         }}>
 
         </View>
-        <OngoingCourses category={data.category_type} title={data.name} heroImageUrl={data.heroImageUrl} />
+        {loading ? (
+        <></>
+        ) : (
+          <OngoingCourses category="Vocational" title="Cooking" heroImageUrl="https://i2.wp.com/www.eatthis.com/wp-content/uploads/2020/07/cooking-with-olive-oil.jpg?resize=640%2C360&ssl=1" />
+        )
+        }
       </ScrollView>
     </SafeAreaView>
   );

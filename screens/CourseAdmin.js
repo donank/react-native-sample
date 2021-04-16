@@ -7,7 +7,7 @@ import {
 } from '@expo-google-fonts/roboto';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AdminCourseCard } from "../components/AdminCourseCard";
-import { fetchTutor, fetchCourses } from "../components/firebase"
+import { fetchTutor, fetchCourses, updateMessageList } from "../components/firebase"
 import { Ionicons } from "@expo/vector-icons";
 import { CommonActions } from '@react-navigation/native';
 
@@ -85,6 +85,9 @@ const CourseAdmin = ({ navigation, route }) => {
                             navigation.dispatch(CommonActions.navigate({name: 'Message', params: { 
                                 pfpurl: pfpurl, name: name
                             }} ))
+                            updateMessageList('aankit@iitk.ac.in', email).then(()=> {
+                                console.log("Messages Updated")
+                            })
                         }}>
                             <Text style={styles.socialButtonText}>Message</Text>
                         </TouchableOpacity>
