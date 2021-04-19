@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Pressable, Dimensions, Platform } from "react-native";
+import { SafeAreaView, StyleSheet, ScrollView, TextInput, View, TouchableOpacity, Text, Image, Pressable, Dimensions, Platform, Animated } from "react-native";
 import AppLoading from 'expo-app-loading';
 import {
     useFonts,

@@ -4,6 +4,7 @@ import { History } from "../screens/History";
 import { Settings } from "../screens/Settings";
 import { BottomTabNavigator } from "./BottomTabNavigator";
 import { Login } from "../screens/Entry/Login";
+import { Animation } from "../screens/Animation";
 
 const Drawer = createDrawerNavigator();
 const DashboardNavigator = ({route}) => {
@@ -26,6 +27,7 @@ const DashboardNavigator = ({route}) => {
             <Drawer.Screen name="Home" component={BottomTabNavigator}/>
             <Drawer.Screen name="History" component={History}/>
             <Drawer.Screen name="Categories" component={Settings}/>
+            <Drawer.Screen name="Animation" component={Animation}/>
             <Drawer.Screen name="Logout" component={Login}/>
         </Drawer.Navigator>
     );
